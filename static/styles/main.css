@@ -16,10 +16,29 @@ body {
     margin: 0 auto;
 }
 
+input[name="room"]::placeholder {
+    text-transform: none; /* Prevent automatic uppercase transformation */
+}
+
+#image-container {
+    width: 49%; /* Set the width of the container */
+    /* height: 200px;  */
+    overflow: hidden; /* Ensure that the image doesn't overflow the container */
+}
+
+#image-container img {
+    width: 100%; 
+    height: auto; 
+    display: block; /* Remove extra spacing below image */
+    margin-top: 20px; /* move the image down */
+}
+
+
 #form-container{
-    width: 800px;
-    box-shadow: var(--shaddow);
-    background-color: #fff;
+    width: 1200px;  
+    /* box-shadow: var(--shaddow); */
+    /* background-color: #fff; */
+    background-color:rgba(232, 233, 239, 1);
     padding: 30px;
     border-radius: 5px;
     position: fixed;
@@ -27,12 +46,16 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 
-    
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    /* flex-direction: column; */
 }
 
 #welcome-message{
     text-align: center;
     margin: 20px;
+    flex-grow: 5;
   
 }
 
@@ -62,11 +85,27 @@ body {
     box-sizing: border-box;
 }
 
-.form-field input[type='submit'] {
+/* .form-field input[type='submit'] {
     background-color: rgba(75, 93, 172, 1);
     border: none;
     color: #fff;
+} */
+
+.form-field input[type='submit'] {
+    background-color: #38d39f;
+    border: none;
+    color: #fff;
+    transition: background-color 0.3s ease; /* Adding a smooth transition effect */
 }
+
+.form-field input[type='submit']:hover {
+    background-color: #258c70; /* Change the color for the hover effect */
+}
+
+
+
+
+
 
 .form-field label {
     font-size: 20px;
@@ -78,13 +117,18 @@ body {
 }
 
 
-@media screen and (max-width:450px){
+@media screen and (max-width:1080px){
     #form-container{
         width: 95%;
     }
 
     #welcome-message{
         font-size: 24px;
+    }
+    #image-container {
+       
+        width: 95%;
+        order: -1;
     }
 }
 

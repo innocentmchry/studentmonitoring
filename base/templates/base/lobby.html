@@ -5,31 +5,40 @@
 
 <main>
     <section id="form-container">
-        <img id="logo" src="{% static 'images/myicon.png' %}" />
+        
 
         <div id="welcome-message">
-            <h1>Welcome to Intelli Meet</h1>
-            <p>A video conferencing application powered with computer vision</p>
+            <img id="logo" src="{% static 'images/myicon.png' %}" />
+            <h1>Sign in with us</h1>
+            <p>Video conferencing application powered by computer vision</p>
+
+
+            <form id="form">
+                <div class="form-field">
+                    <label for="room"></label>
+                    <input type="text" name="room" style="text-transform:uppercase ;" placeholder="Room Name" required >
+                </div>
+                <div class="form-field">
+                    <label for="email"></label>
+                    <input type="email" name="email" placeholder="Email" required >
+                </div>
+                <div class="form-field">
+                    <label for="username"></label>
+                    <input type="text" name="username" placeholder="Username" required >
+                </div>
+    
+                <div class="form-field">
+                    <input type="submit" value="Join Stream">
+                </div>
+            </form>
         </div>
 
-        <form id="form">
-            <div class="form-field">
-                <label for="room">Room</label>
-                <input type="text" name="room" style="text-transform:uppercase ;" required >
-            </div>
-            <div class="form-field">
-                <label for="email">Email</label>
-                <input type="email" name="email" required >
-            </div>
-            <div class="form-field">
-                <label for="username">Name</label>
-                <input type="text" name="username" required >
-            </div>
+        <div id="image-container">
+            <img src="{% static 'images/login-img.png' %}">
+        </div>
 
-            <div class="form-field">
-                <input type="submit" value="Join Stream">
-            </div>
-        </form>
+       
+        
     </section>
 
 </main>
