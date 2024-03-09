@@ -315,7 +315,7 @@ let leaveAndRemoveLocalStream = async () => {
         await calculateSummary()
     }
     else{
-        window.open('/','_self')
+        window.open('/loadSummary','_self')
     }
 
 }
@@ -325,7 +325,7 @@ let calculateSummary = async () => {
             type: 'GET',
             url: '/calculate_summary/',
             success: async (response) => {
-                window.open('/summary/', '_self')
+                window.open('/loadSummary/', '_self')
             },
             error: async(response) => {
                 alert("No Data Found");
@@ -387,6 +387,22 @@ let deleteMember = async () => {
 
 
 joinAndDisplayLocalStream()
+
+// const videoContainers = document.querySelectorAll('.video-container')
+// numberOfElements = videoContainers.length
+// var videoStream = document.getElementById('video-streams')
+
+// if (numberOfElements > 9) {
+//     columns = 4
+//     videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`            
+// } else if (numberOfElements > 4) {
+//     columns = 3
+//     videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
+// } else if (numberOfElements > 1){
+//     columns = 2
+//     videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
+// }
+
 
 // if member closes instead of leave button
 window.addEventListener('beforeunload', deleteMember)

@@ -3,8 +3,11 @@
 }
 
 body {
-    background-color: rgba(232, 233, 239, 1);
+    /* background-color: rgba(232, 233, 239, 1); */
+    font-family: 'Roboto', sans-serif;
+    
     /* background-color: #EAF6F6; */
+    background-color: #f4f4f4;
 }
 
 
@@ -21,28 +24,29 @@ input[name="room"]::placeholder {
 }
 
 #image-container {
-    width: 49%; /* Set the width of the container */
+    width: 49%;
     /* height: 200px;  */
-    overflow: hidden; /* Ensure that the image doesn't overflow the container */
+    overflow: hidden; 
 }
 
 #image-container img {
     width: 100%; 
     height: auto; 
-    display: block; /* Remove extra spacing below image */
-    margin-top: 20px; /* move the image down */
+    display: block;
+    margin-top: 60px; /* move the image down */
 }
 
 
 #form-container{
+    margin-top: 1px;
     width: 1200px;  
     /* box-shadow: var(--shaddow); */
     /* background-color: #fff; */
-    background-color:rgba(232, 233, 239, 1);
+    /* background-color:rgba(232, 233, 239, 1); */
     padding: 30px;
     border-radius: 5px;
     position: fixed;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
 
@@ -50,13 +54,13 @@ input[name="room"]::placeholder {
     flex-wrap: wrap;
     align-content: flex-start;
     /* flex-direction: column; */
+    width: 65%;
 }
 
 #welcome-message{
     text-align: center;
     margin: 20px;
     flex-grow: 5;
-  
 }
 
 #welcome-message h1{
@@ -66,6 +70,7 @@ input[name="room"]::placeholder {
 #welcome-message p{
     font-size: 16px;
     margin-bottom: 40px; 
+    color: #777;
 }
 
 .form-field{
@@ -80,9 +85,15 @@ input[name="room"]::placeholder {
 .form-field input {
     width: 100%;
     border: 2px solid rgba(198, 202, 219, 1);
-    border-radius: 5px;
+    /* border-radius: 5px; */
     padding: 10px;
+    border: none;
     box-sizing: border-box;
+    background: transparent;
+    border-bottom: 1px solid #ccc;
+    /* font-size: 17px; */
+    font-size: 15px;
+    border-radius: 0;
 }
 
 /* .form-field input[type='submit'] {
@@ -112,7 +123,7 @@ input[name="room"]::placeholder {
 }
 
 .form-field input[type="submit"] {
-    height: 45px;
+    height: 50px;
     margin-top: 20px;
 }
 
@@ -161,7 +172,7 @@ input[name="room"]::placeholder {
     justify-content: center;
     width: 100%;
     text-align: center;
-    border: 1px solid rgb(75, 95, 172);
+    border: 1px solid rgb(81, 81, 82);
     border-radius: 5px;
     margin: 2px;
     background-color: rgba(198, 202, 219, 1);
@@ -213,7 +224,7 @@ input[name="room"]::placeholder {
     background-color: #fff;
     cursor: pointer;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 50%;
 }
 
 #leave-btn{
@@ -226,16 +237,106 @@ input[name="room"]::placeholder {
     float: right;
     top: 0;
     right: 0;
-    width: 25%; /* Adjust the width as needed */
+    width: 35%; /* Adjust the width as needed */
     height: 100%; /* Take full height of the viewport */
     overflow-y: auto; /* Add vertical scroll if content exceeds the height */
 }
 
 #main-panel {
-    width: 75%;
+    width: 65%;
     float: left;
 }
 
+#side-panel {
+    left:0; right:0;
+    top: 50px;
+    /* margin: auto; */
+    width: 450px;
+    border-radius: 5px;
+    background: #fff;
+    overflow: hidden;
+    margin-right: 20px;
+    margin-top: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    color:#545454;
+    box-shadow: 0 2px 6px 0 rgba(0,0,0, .3);
+    max-height: 700px;
+    overflow-y: auto;
+}
+
+
+.side-panel-header {
+    padding: 20px 15px;
+    text-align: center;
+    position: relative;
+}
+
+.side-panel-title {
+    font-size: 26px;
+}
+
+/* .table-body {
+    overflow: auto; 
+    height: 100px;
+} */
+
+/* .table-rows {
+    margin: 100;
+    padding: 10px 40px;
+} */
+
+#dynamic-table td{
+    padding: 10px 5px;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
+
+
+#dynamic-table th {
+    padding: 40px 4px;
+    text-align: center;
+    transform: rotate(-45deg);
+    white-space: nowrap;
+    /* position: sticky; top: 0; z-index: 1; */
+}
+
+/* .table-rows:after {
+    content: '';
+    display: table;
+    clear:both;
+} */
+
+/* .table-rows-even {
+    background-color: #fff;
+} */
+
+
+#dynamic-table thead tr th {
+    text-align: center;
+    font-weight: bold;
+    border-top: 0.5px solid #e4e3e3;
+}
+
+#dynamic-table tbody tr{
+    border: 0.5px solid #e4e3e3;
+    
+}
+#dynamic-table td:first-child {
+    padding-left: 10px;
+    align-items: center;
+}
+
+
+
+/* 
 #dynamic-table {
     border-collapse: collapse;
     margin: 0 0;
@@ -294,7 +395,9 @@ input[name="room"]::placeholder {
 
 .dynamic-table-2 tbody tr:last-of-type {
     border-bottom: 0.5px solid #009879;
-}
+} */
+
+
 
 /* --- First Component --- */
 
@@ -441,6 +544,32 @@ li{
     color: white;
     padding: 16px 32px;
     text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+/* .clearBtn {
+    display: flex;
+    justify-content: center;
+    margin-right: 0;
+} */
+
+.clearBtn {
+    position: absolute;
+    right: 165px;
+    top: 7%;
+    transform: translateY(-50%);
+}
+
+#clearBtn {
+    background-color: #aa0444;
+    border: none;
+    color: white;
+    padding: 16px 32px;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;

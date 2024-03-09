@@ -4,35 +4,138 @@
 {% block content %}
 
 <main>
-    <div>
-        <h2 id="summary-title" >Summary View</h2>
-        <table class="dynamic-table-2">
+<h1 style="text-align: center;">Overall Emotion Analysis</h1>
+<div class='clearBtn'>
+    <button id="clearBtn">Clear Data</button>
+</div>
+
+<div class="firstComponent">
+    <div id="myChartDiv">
+        <canvas id="myChart"></canvas>
+    </div>
+    <div id="myChartDiv2">
+        <canvas id="myChart2"></canvas>
+    </div>
+</div>
+<h1 style="text-align: center;">Rankings of Emotions</h1>
+<div class="secondComponent">
+    {% comment %} <div>
+        <table class="dynamic-table-2", id="dynamic-table-2">
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Rank</th>
                     <th>Curious</th>
-                    <th>Confusion</th>
-                    <th>Boredom</th>
-                    <th>Hopefullness</th>
+                    <th>Confused</th>
+                    <th>Bored</th>
+                    <th>Hopefull</th>
                     <th>Neutral</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- dynamic table-->
-                {% for summary in summaries %}
-                    <tr>
-                        <td>{{ summary.name }}</td>
-                        <td>{{ summary.curious }}</td>
-                        <td>{{ summary.confusion }}</td>
-                        <td>{{ summary.boredom }}</td>
-                        <td>{{ summary.hopefullness }}</td>
-                        <td>{{ summary.neutral }}</td>
-                    </tr>
-                {% endfor %}
             </tbody>
         </table>
+    </div> {% endcomment %}
+
+    <div class="X">        
+        <ul class="SG">
+          <li class="sgLi">
+            <div class="box">
+            <h3 class="listTitle">Curious</h3>
+            <div class="scrollable-content">
+                <ol class="df">
+                    {% comment %} dynamic list {% endcomment %}
+                </ol>
+            </div>
+          </div>
+         </li> 
+          <li class="sgLi">
+            <div class="box">
+           <h3 class="listTitle">Confused</h3>
+           <div class="scrollable-content">
+            <ol class="s1">
+                {% comment %} dynamic list {% endcomment %}
+            </ol>
+        </div>
+          </div>
+         </li>
+          <li class="sgLi">
+            <div class="box">
+           <h3 class="listTitle">Bored</h3>
+           <div class="scrollable-content">
+            <ol class="s3">
+                {% comment %} dynamic list {% endcomment %}
+            </ol>
+        </div>
+          </div>
+         </li>
+          <li class="sgLi">
+            <div class="box">
+           <h3 class="listTitle">Hopefull</h3>
+           <div class="scrollable-content">
+            <ol class="s4">
+                {% comment %} dynamic list {% endcomment %}
+            </ol>
+        </div>
+          </div>
+         </li>
+         <li class="sgLi">
+            <div class="box">
+           <h3 class="listTitle">Neutral</h3>
+           <div class="scrollable-content">
+            <ol class="s4">
+                {% comment %} dynamic list {% endcomment %}
+            </ol>
+        </div>
+          </div>
+         </li>
+        </ul>
     </div>
+</div>
+
+<h1 style="text-align: center; margin-top: 100px;">Character View</h1>
+<div id="thirdComponent">
+    {% comment %} <div class="usersOfThirdComponent">
+        <div class="namesOfThirdComponent"><h3>Name</h3></div>
+        <div class="pieChart">
+            <canvas id="charChart1"></canvas>
+        </div>
+        <div class="scatterChart">
+            <canvas id="charChart2"></canvas>
+        </div>
+    </div>   {% endcomment %}
+
+    {% comment %} dynamic elements {% endcomment %}
+
+</div>
+
+<h1 style="text-align: center; margin-top: 100px;">Detailed Time Stamp Analysis</h1>
+<div id="fourthComponent">
+    {% comment %} <div class="usersOfFourthComponent">
+        <div class="namesOfFourthComponent"><h3>Name</h3></div>
+        <div class="lineChart">
+            <canvas id="lineChart1"></canvas>
+        </div>
+    </div>   {% endcomment %}
+
+    {% comment %} dynamic elements {% endcomment %}
+
+</div>
+
+<div id="downloadSection">
+    <h3>CSV Data</h3>
+    <button id="downloadButton">Download</button>
+</div>
+
+
 
 </main>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript" src="{% static 'js/summary.js' %}"></script>
+
+
 
 {% endblock content %}

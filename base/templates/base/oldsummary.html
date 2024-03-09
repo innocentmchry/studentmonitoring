@@ -1,0 +1,38 @@
+{% extends "base/main.html" %}
+{% load static %}
+
+{% block content %}
+
+<main>
+    <div>
+        <h2 id="summary-title" >Summary View</h2>
+        <table class="dynamic-table-2">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Curious</th>
+                    <th>Confusion</th>
+                    <th>Boredom</th>
+                    <th>Hopefullness</th>
+                    <th>Neutral</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- dynamic table-->
+                {% for summary in summaries %}
+                    <tr>
+                        <td>{{ summary.name }}</td>
+                        <td>{{ summary.curious }}</td>
+                        <td>{{ summary.confusion }}</td>
+                        <td>{{ summary.boredom }}</td>
+                        <td>{{ summary.hopefullness }}</td>
+                        <td>{{ summary.neutral }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+{% endblock content %}

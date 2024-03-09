@@ -1,8 +1,10 @@
-console.log('Summary.js is executing!');
 
 fetch('/calculate_first_component/')
   .then(response => response.json())
   .then(data => {
+    if (data.val == 0) {
+      alert('Wait for the admin to end the conference, then reload again')
+    }
     const ctx = document.getElementById('myChart');
     
     new Chart(ctx, {
@@ -218,7 +220,7 @@ let createUserScatterChart = (id, uid, responseData) => {
           suggestedMax: 1,
           title: {
             display: true,
-            text: 'Valence Axis'
+            text: 'Valence'
           },
         },
         y: {
@@ -234,7 +236,7 @@ let createUserScatterChart = (id, uid, responseData) => {
           suggestedMax: 1,
           title: {
             display: true,
-            text: 'Arousal Axis'
+            text: 'Arousal'
         },
         }
       },
@@ -300,4 +302,24 @@ let downloadCsvFile = () => {
   window.location.href = '/download_csv_file/'
 }
 
+let clearData = async () => {  
+  let EMAIL = sessionStorage.getItem('email')
+  let response = await fetch('/check_admin_clear_data/', {
+    method:'POST',
+    headers:{
+        'Content-Type':'application/json'
+    },
+    body:JSON.stringify({'email': EMAIL})
+  })
+  let member = await response.json()
+  if (member.deleted == 1) {
+    alert('Clear Data Successfull!')
+  }else {
+    alert('Permission Denied, Only Admins can delete')
+  }
+  
+}
+
+window.addEventListener('beforeunload', clearData)
 document.getElementById('downloadButton').addEventListener('click', downloadCsvFile)
+document.getElementById('clearBtn').addEventListener('click', clearData)
