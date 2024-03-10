@@ -412,6 +412,17 @@ def downloadCsvFile(request):
         writer.writerow(modified_row)
     return response
 
+def downloadCsvFile2(request):
+    student_emotions = Student_Emotion.objects.all()
+    response = HttpResponse('text/csv')
+    response['Content-Disposition'] = 'attachment; filename=studentemotiondata.csv'
+    writer = csv.writer(response)
+    writer.writerow(['ID', 'UID','Name', 'Curious' , 'Confusion', 'Boredom', 'Hopefullness', 'Neutral'])
+    student_emotion = student_emotions.values_list('id','uid', 'name', 'curious' , 'confusion', 'boredom', 'hopefullness', 'neutral')
+    for row in student_emotion:
+        writer.writerow(row)
+    return response
+
 def checkAdminClearData(request):
     data = json.loads(request.body)
     

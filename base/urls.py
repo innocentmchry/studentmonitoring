@@ -19,5 +19,6 @@ urlpatterns = [
     path('calculate_third_component/', views.calculateThirdComponent),
     path('calculate_fourth_component/', views.calculateFourthComponent),
     path('download_csv_file/', views.downloadCsvFile),
+    path('download_csv_file2/', views.downloadCsvFile2),
     path('check_admin_clear_data/', views.checkAdminClearData),
 ]

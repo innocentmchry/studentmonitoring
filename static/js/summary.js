@@ -313,13 +313,19 @@ let clearData = async () => {
   })
   let member = await response.json()
   if (member.deleted == 1) {
-    alert('Clear Data Successfull!')
+    alert('Clear Data Successfull! Reload the page to update.')
   }else {
     alert('Permission Denied, Only Admins can delete')
   }
   
 }
 
-window.addEventListener('beforeunload', clearData)
+let downloadCsvFile2 = () => {
+  window.location.href = '/download_csv_file2/'
+}
+
+
+// window.addEventListener('beforeunload', clearData)
 document.getElementById('downloadButton').addEventListener('click', downloadCsvFile)
+document.getElementById('downloadButton2').addEventListener('click', downloadCsvFile2)
 document.getElementById('clearBtn').addEventListener('click', clearData)

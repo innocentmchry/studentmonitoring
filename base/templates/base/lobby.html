@@ -8,9 +8,9 @@
         
 
         <div id="welcome-message">
-            <img id="logo" src="{% static 'images/myicon.png' %}" />
-            <h1>Welcome</h1>
-            <p>A video conferencing web app powered with computer vision.</p>
+            <img id="logo" src="{% static 'images/new-icon.png' %}" />
+            <h1>Hi There!</h1>
+            <p id="welcome-message-p">Welcome to our video conferencing web app powered with computer vision. This project utilizes the WebRTC and incorporates image processing techniques to analyze participant behavior.</p>
 
 
             <form id="form">
@@ -32,6 +32,23 @@
                 </div>
 
             </form>
+
+            <div>
+                <p id="lobby-icon-par" >Reach us at</p>
+                <section id="lobby-icons-wrapper">
+                    <div>
+                        <a href="https://api.whatsapp.com/send?phone=+919101474958" target='_blank'>
+                            <img class="lobby-icon-wa" id="whatsapp-btn" src="{% static 'images/wa.png' %}" />
+                        </a>                        
+                    </div>
+            
+                    <div>
+                        <a href="mailto:imdengkhw@gmail.com">
+                            <img class="lobby-icon" id="gmail-btn" src="{% static 'images/gmail.png' %}" />
+                        </a>
+                    </div>
+                </section>
+            </div>
         </div>
 
         <div id="image-container">
@@ -67,7 +84,17 @@
         window.open('/room/', '_self')
     }
 
+    let whatsappMe = () => {
+
+    }
+
+    let emailMe = () => {
+        
+    }
+
     form.addEventListener('submit', handleSubmit)
+    document.getElementById('whatsapp-btn').addEventListener('click', whatsappMe)
+    document.getElementById('gmail-btn').addEventListener('click', emailMe)
 </script>
 
 {% endblock content %}

@@ -27,6 +27,7 @@ input[name="room"]::placeholder {
     width: 49%;
     /* height: 200px;  */
     overflow: hidden; 
+    margin-top: 100px;
 }
 
 #image-container img {
@@ -51,8 +52,8 @@ input[name="room"]::placeholder {
     transform: translate(-50%, -50%);
 
     display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
+    /* flex-wrap: wrap; */
+    /* align-content: flex-start; */
     /* flex-direction: column; */
     width: 65%;
 }
@@ -60,17 +61,22 @@ input[name="room"]::placeholder {
 #welcome-message{
     text-align: center;
     margin: 20px;
+    margin-top: 100px;
     flex-grow: 5;
+    max-width: 550px;
 }
 
 #welcome-message h1{
     font-size: 36px;
 }
 
-#welcome-message p{
+#welcome-message-p{
     font-size: 16px;
     margin-bottom: 40px; 
     color: #777;
+    line-height: 25px;
+    margin-left: 25px;
+    margin-right: 25px;
 }
 
 .form-field{
@@ -207,6 +213,35 @@ input[name="room"]::placeholder {
 } */
 
 /* ---- BUTTONS ------ */
+
+#lobby-icon-par {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #777;
+}
+
+#lobby-icons-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    column-gap: 1em;
+    /* position: fixed; */
+    bottom: 20px;
+}
+
+.lobby-icon-wa{
+    height: 47px;
+    width: 47px;
+    cursor: pointer;
+    /* border-radius: 50%; */
+}
+
+.lobby-icon{
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    /* border-radius: 50%; */
+}
 
 #controls-wrapper{
     display: flex;
@@ -538,7 +573,7 @@ li{
     margin-top: 20px;
 }
 
-#downloadButton {
+.downloadButton {
     background-color: #04AA6D; /* Green */
     border: none;
     color: white;

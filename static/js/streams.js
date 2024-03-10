@@ -63,6 +63,13 @@ let joinAndDisplayLocalStream = async() => {
  
     if (member.role == "admin"){
         ADMIN = true
+        var userConfirmed = window.confirm("Would you like to clear the previous meeting data?");
+
+        if (userConfirmed) {
+            clearData()
+        } else {
+            alert("Clear Data canceled, The previous meeting data will mix up with new meeting data");
+        }
     }
 
     // if instructor then this
@@ -383,6 +390,24 @@ let deleteMember = async () => {
     let member = await response.json()
 
 }
+
+let clearData = async () => {  
+    let EMAIL = sessionStorage.getItem('email')
+    let response = await fetch('/check_admin_clear_data/', {
+      method:'POST',
+      headers:{
+          'Content-Type':'application/json'
+      },
+      body:JSON.stringify({'email': EMAIL})
+    })
+    let member = await response.json()
+    if (member.deleted == 1) {
+      alert('Clear Data Successfull!')
+    }else {
+      alert('Permission Denied, Only Admins can delete')
+    }
+    
+  }
 
 
 
