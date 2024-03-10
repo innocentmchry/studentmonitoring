@@ -65,15 +65,4 @@ class Summary(models.Model):
     def __str__(self):
         return self.name
 
-# class Ranking(models.Model):
-#     rank = models.IntegerField()
-#     curious_person = models.CharField(max_length=100)
-#     confused_person = models.CharField(max_length=100)
-#     bored_person = models.CharField(max_length=100)
-#     hopefull_person = models.CharField(max_length=100)
-#     neutral_person = models.CharField(max_length=100)
-    
-#     def __str__(self):
-#         str_rank = str(self.rank)
-#         return str_rank
     
