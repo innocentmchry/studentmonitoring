@@ -423,6 +423,7 @@ def downloadCsvFile2(request):
         writer.writerow(row)
     return response
 
+@csrf_exempt
 def checkAdminClearData(request):
     data = json.loads(request.body)
     
@@ -442,7 +443,7 @@ def checkAdminClearData(request):
     
     return JsonResponse({'deleted':deleted})
 
-
+@csrf_exempt
 def recalculate(request):
     data = json.loads(request.body)
     
