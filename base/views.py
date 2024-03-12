@@ -252,29 +252,29 @@ def summary(request):
     return render(request, 'base/summary.html', {'summaries': summaries})
 
 
-def calculateSummary(request): 
-    if Summary.objects.count() == 0:
-        student_emotions = Student_Emotion.objects.all()
-        summary_objects = []
-        
-        for student_emotion in student_emotions:
-            total_emotions = student_emotion.curious + student_emotion.confusion + student_emotion.boredom + student_emotion.hopefullness + student_emotion.neutral
-            curious_percentage = (student_emotion.curious / total_emotions) * 100
-            confusion_percentage = (student_emotion.confusion / total_emotions) * 100
-            boredom_percentage = (student_emotion.boredom / total_emotions) * 100
-            hopefullness_percentage = (student_emotion.hopefullness / total_emotions) * 100
-            neutral_percentage = (student_emotion.neutral / total_emotions) * 100
-            summary_object = Summary(
-                name=student_emotion.name,
-                curious=round(curious_percentage, 2),
-                confusion=round(confusion_percentage, 2),
-                boredom=round(boredom_percentage, 2),
-                hopefullness=round(hopefullness_percentage, 2),
-                neutral=round(neutral_percentage, 2)
-            )
-            summary_objects.append(summary_object)
+def calculateSummary(request):
+    Summary.objects.all().delete()
+    student_emotions = Student_Emotion.objects.all()
+    summary_objects = []
+    
+    for student_emotion in student_emotions:
+        total_emotions = student_emotion.curious + student_emotion.confusion + student_emotion.boredom + student_emotion.hopefullness + student_emotion.neutral
+        curious_percentage = (student_emotion.curious / total_emotions) * 100
+        confusion_percentage = (student_emotion.confusion / total_emotions) * 100
+        boredom_percentage = (student_emotion.boredom / total_emotions) * 100
+        hopefullness_percentage = (student_emotion.hopefullness / total_emotions) * 100
+        neutral_percentage = (student_emotion.neutral / total_emotions) * 100
+        summary_object = Summary(
+            name=student_emotion.name,
+            curious=round(curious_percentage, 2),
+            confusion=round(confusion_percentage, 2),
+            boredom=round(boredom_percentage, 2),
+            hopefullness=round(hopefullness_percentage, 2),
+            neutral=round(neutral_percentage, 2)
+        )
+        summary_objects.append(summary_object)
 
-        Summary.objects.bulk_create(summary_objects)
+    Summary.objects.bulk_create(summary_objects)
 
     return JsonResponse({})
 
@@ -441,4 +441,30 @@ def checkAdminClearData(request):
         deleted = 1
     
     return JsonResponse({'deleted':deleted})
+
+
+def recalculate(request):
+    data = json.loads(request.body)
+    
+    email = data['email']
+    recalculated = 0
+    try:
+        admin = Admin.objects.get(email=email)
+        role = "admin"
+    except Admin.DoesNotExist:
+        role = "participant"
+    
+    if role == 'admin':
+        calculateSummary(request)
+        recalculated = 1
+    
+    return JsonResponse({'recalculated':recalculated})
+
+def checkEmpty(request):
+    empty = 1
+    if Summary.objects.count() != 0:
+        empty = 0
+
+    print(f'returned empty value is {empty}')
+    return JsonResponse({'empty': empty})
     

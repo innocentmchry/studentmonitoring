@@ -607,3 +607,23 @@ li{
     cursor: pointer;
 }
 
+#recalculateBtn {
+    background-color: #0e0185;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+
+.recalculateBtn {
+    position: absolute;
+    left: 165px;
+    top: 7%;
+    transform: translateY(-50%);
+}

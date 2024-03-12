@@ -63,13 +63,29 @@ let joinAndDisplayLocalStream = async() => {
  
     if (member.role == "admin"){
         ADMIN = true
-        var userConfirmed = window.confirm("Would you like to clear the previous meeting data?");
+        let empty = 1 // let it be empty, empty = 1 (true)
 
-        if (userConfirmed) {
-            clearData()
-        } else {
-            alert("Clear Data canceled, The previous meeting data will mix up with new meeting data");
-        }
+        $.ajax({
+            type:'GET',
+            url: '/check_empty/',
+            success: (response) => {
+                empty = response.empty
+                if (empty == 0) {
+                    var userConfirmed = window.confirm("Would you like to clear the previous meeting data?");
+                    if (userConfirmed) {
+                        clearData()
+                    } else {
+                        alert("Clear Data canceled, The previous meeting data will mix up with new meeting data");
+                    }
+                } 
+            },
+            error: async(response) => {
+                alert("check Empty Error");
+            }
+        })
+        console.log('value of empty is: ' + empty)
+
+      
     }
 
     // if instructor then this
@@ -140,9 +156,6 @@ let updateEmotion = () => {
     })
 }
 
-// let updateEmotion = () => {
-//     console.log("I am data");
-// }
 
 
 

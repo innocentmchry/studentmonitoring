@@ -302,20 +302,43 @@ let downloadCsvFile = () => {
   window.location.href = '/download_csv_file/'
 }
 
-let clearData = async () => {  
+let clearData = async () => {
+  var userConfirmed = window.confirm("Would you like to clear this meeting data?");
+  if (userConfirmed) {
+    let EMAIL = sessionStorage.getItem('email')
+    let response = await fetch('/check_admin_clear_data/', {
+      method:'POST',
+      headers:{
+          'Content-Type':'application/json'
+      },
+      body:JSON.stringify({'email': EMAIL})
+    })
+    let result = await response.json()
+    if (result.deleted == 1) {
+      alert('Clear Data Successfull! Reload the page to update.')
+    }else {
+      alert('Permission Denied, Only Admins can delete')
+    }
+  } else {
+      alert("Clear Data canceled!");
+  }
+
+}
+
+let recalculate = async () => {  
   let EMAIL = sessionStorage.getItem('email')
-  let response = await fetch('/check_admin_clear_data/', {
+  let response = await fetch('/check_admin_recalculate_data/', {
     method:'POST',
     headers:{
         'Content-Type':'application/json'
     },
     body:JSON.stringify({'email': EMAIL})
   })
-  let member = await response.json()
-  if (member.deleted == 1) {
-    alert('Clear Data Successfull! Reload the page to update.')
+  let result = await response.json()
+  if (result.recalculated == 1) {
+    alert('Recalculation Successfull! Reload the page to update.')
   }else {
-    alert('Permission Denied, Only Admins can delete')
+    alert('Permission Denied, Only Admins can recalculate')
   }
   
 }
@@ -329,3 +352,4 @@ let downloadCsvFile2 = () => {
 document.getElementById('downloadButton').addEventListener('click', downloadCsvFile)
 document.getElementById('downloadButton2').addEventListener('click', downloadCsvFile2)
 document.getElementById('clearBtn').addEventListener('click', clearData)
+document.getElementById('recalculateBtn').addEventListener('click', recalculate)
