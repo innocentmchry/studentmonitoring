@@ -11,8 +11,8 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-settings_module = 'mychat.deployment' if 'WEBSITE_HOSTNAME' in os.environ else 'mychat.settings'
+# settings_module = 'mychat.deployment' if 'WEBSITE_HOSTNAME' in os.environ else 'mychat.settings'
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'mychat.settings')
 
 application = get_wsgi_application()
