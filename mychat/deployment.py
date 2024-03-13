@@ -23,14 +23,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sm',
-        'USER': 'evihjczmcp',
-        'PASSWORD': 'Dengkhw273@',
-        'HOST': 'studentmonitoring-server.postgres.database.azure.com',
-        'PORT': '5432', 
-        'OPTIONS': {'sslmode': 'require'}
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'sm',
+#         'USER': 'evihjczmcp',
+#         'PASSWORD': 'Dengkhw273@',
+#         'HOST': 'studentmonitoring-server.postgres.database.azure.com',
+#         'PORT': '5432', 
+#         'OPTIONS': {'sslmode': 'require'}
+#     }
+# }
