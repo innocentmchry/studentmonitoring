@@ -26,7 +26,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "sm",
+        "NAME": "postgres",
         "USER": "evihjczmcp",
         "PASSWORD": "Dengkhw273@",
         "HOST": "studentmonitoring-server.postgres.database.azure.com",
