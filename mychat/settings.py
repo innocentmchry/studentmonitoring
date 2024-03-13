@@ -17,13 +17,13 @@ SECRET_KEY = "django-insecure-ck169#$fxe75b^-b(-bunh8n*6b2ug-^&qv2#rkduw!=$@y$e0
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'https://studentmonitoring.azurewebsites.net', 'localhost'
+    'https://studentmonitoring.azurewebsites.net', '20.192.170.15', 'studentmonitoring.azurewebsites.net' ,'http://studentmonitoring.azurewebsites.net'
 ]
 
 # SECRET_KEY = os.environ['SECRET']
 # DEBUG = True
 # ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
-CSRF_TRUSTED_ORIGINS = ['https://studentmonitoring.azurewebsites.net']
+CSRF_TRUSTED_ORIGINS = ['https://studentmonitoring.azurewebsites.net', '20.192.170.15', 'studentmonitoring.azurewebsites.net', 'http://studentmonitoring.azurewebsites.net']
 
 
 # Application definition
