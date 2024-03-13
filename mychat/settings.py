@@ -29,7 +29,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    
     'base',
 ]
 
@@ -78,13 +77,25 @@ WSGI_APPLICATION = "mychat.wsgi.application"
 #     }
 # }
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'sm',
+        'USER': 'evihjczmcp',
+        'PASSWORD': 'Dengkhw273@',
+        'HOST': 'studentmonitoring-server.postgres.database.azure.com',
+        'PORT': '5432', 
+        'OPTIONS': {'sslmode': 'require'}
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
