@@ -11,17 +11,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-# SECRET_KEY = "django-insecure-ck169#$fxe75b^-b(-bunh8n*6b2ug-^&qv2#rkduw!=$@y$e0"
+SECRET_KEY = "django-insecure-ck169#$fxe75b^-b(-bunh8n*6b2ug-^&qv2#rkduw!=$@y$e0"
 
-# # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
 # ALLOWED_HOSTS = [
 #     '*',
 # ]
 
-SECRET_KEY = os.environ['SECRET']
-DEBUG = True
+# SECRET_KEY = os.environ['SECRET']
+# DEBUG = True
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
 CSRF_TRUSTED_ORIGINS = ['https://' + os.environ['WEBSITE_HOSTNAME']]
 
