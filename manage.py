@@ -8,6 +8,7 @@ def main():
     """Run administrative tasks."""
     settings_module = 'mychat.deployment' if 'WEBSITE_HOSTNAME' in os.environ else 'mychat.settings'
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
+    print(f'default settings is {settings_module}')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
