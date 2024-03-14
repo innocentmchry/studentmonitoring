@@ -158,6 +158,7 @@ input[name="room"]::placeholder {
 
 #room-name-wrapper p{
     margin: 10px;
+    color: #777;
 }
 
 #video-streams{

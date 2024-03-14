@@ -1,6 +1,6 @@
 import os 
 from .settings import *
-from .settings import BASE_DIR
+# from .settings import BASE_DIR
 
 SECRET_KEY = os.environ['SECRET']
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
@@ -9,7 +9,7 @@ DEBUG = True
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -20,17 +20,18 @@ MIDDLEWARE = [
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'sm',
-#         'USER': 'evihjczmcp',
-#         'PASSWORD': 'Dengkhw273@',
-#         'HOST': 'studentmonitoring-server.postgres.database.azure.com',
-#         'PORT': '5432', 
-#         'OPTIONS': {'sslmode': 'require'}
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'sm',
+        'USER': 'evihjczmcp',
+        'PASSWORD': 'Dengkhw273@',
+        'HOST': 'studentmonitoring-server.postgres.database.azure.com',
+        'PORT': '5432', 
+        'OPTIONS': {'sslmode': 'require'}
+    }
+}
