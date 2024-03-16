@@ -22,19 +22,20 @@ SECRET_KEY = "django-insecure-ck169#$fxe75b^-b(-bunh8n*6b2ug-^&qv2#rkduw!=$@y$e0
 # Local server
 DEBUG = True
 ALLOWED_HOSTS = [
-    '*'
+    'localhost', '172.16.37.91', '*'
 ]
 
 # Application definition
 
 INSTALLED_APPS = [
+    "whitenoise.runserver_nostatic",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'base',
+    "base",
 ]
 
 # MIDDLEWARE = [
