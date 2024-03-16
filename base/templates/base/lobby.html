@@ -4,53 +4,54 @@
 {% block content %}
 
 <main>
-    <section id="form-container">
-        
+    <section id="lobby-container">
 
-        <div id="welcome-message">
-            <img id="logo" src="{% static 'images/new-icon.png' %}" />
-            <h1>Hi There!</h1>
-            <p id="welcome-message-p">Welcome to our video conferencing web app powered with computer vision. This project utilizes WebRTC and incorporates image processing techniques to analyze participant behavior.</p>
-
-
-            <form id="form">
-                <div class="form-field">
-                    <label for="room"></label>
-                    <input type="text" name="room" style="text-transform:uppercase ; color: #777;" placeholder="Room Name" value="TEST ROOM" readonly required >
-                </div>
-                <div class="form-field">
-                    <label for="email"></label>
-                    <input type="email" name="email" placeholder="Email" required >
-                </div>
-                <div class="form-field">
-                    <label for="username"></label>
-                    <input type="text" name="username" placeholder="Name" required >
-                </div>
+        <div id="left-container">
+            <div id="form-container">
+                <img id="logo" src="{% static 'images/new-icon.png' %}" />
+                <h1>Hi There!</h1>
+                <p id="form-container-p">Welcome to our video conferencing web app powered with computer vision. This project utilizes WebRTC and incorporates image processing techniques to analyze participant behavior.</p>
     
-                <div class="form-field">
-                    <input type="submit" value="Join Stream">
+    
+                <form id="form">
+                    <div class="form-field">
+                        <label for="room"></label>
+                        <input type="text" name="room" style="text-transform:uppercase ; color: #777;" placeholder="Room Name" value="TEST ROOM" readonly required >
+                    </div>
+                    <div class="form-field">
+                        <label for="email"></label>
+                        <input type="email" name="email" placeholder="Email" required >
+                    </div>
+                    <div class="form-field">
+                        <label for="username"></label>
+                        <input type="text" name="username" placeholder="Name" required >
+                    </div>
+        
+                    <div class="form-field">
+                        <input type="submit" value="Join Stream">
+                    </div>
+    
+                </form>
+    
+                <div>
+                    <p id="lobby-icon-par" >Reach us at</p>
+                    <section id="lobby-icons-wrapper">
+                        <div>
+                            <a href="https://api.whatsapp.com/send?phone=+919101474958" target='_blank'>
+                                <img class="lobby-icon-wa" id="whatsapp-btn" src="{% static 'images/wa.png' %}" />
+                            </a>                        
+                        </div>
+                
+                        <div>
+                            <a href="mailto:imdengkhw@gmail.com">
+                                <img class="lobby-icon" id="gmail-btn" src="{% static 'images/gmail.png' %}" />
+                            </a>
+                        </div>
+                    </section>
                 </div>
-
-            </form>
-
-            <div>
-                <p id="lobby-icon-par" >Reach us at</p>
-                <section id="lobby-icons-wrapper">
-                    <div>
-                        <a href="https://api.whatsapp.com/send?phone=+919101474958" target='_blank'>
-                            <img class="lobby-icon-wa" id="whatsapp-btn" src="{% static 'images/wa.png' %}" />
-                        </a>                        
-                    </div>
-            
-                    <div>
-                        <a href="mailto:imdengkhw@gmail.com">
-                            <img class="lobby-icon" id="gmail-btn" src="{% static 'images/gmail.png' %}" />
-                        </a>
-                    </div>
-                </section>
             </div>
-        </div>
 
+        </div>
         <div id="image-container">
             <img src="{% static 'images/login-img.png' %}">
         </div>

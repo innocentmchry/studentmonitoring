@@ -133,22 +133,6 @@ let joinAndDisplayLocalStream = async() => {
 
     }, 5000)
 
-    // setInterval(async () => {
-    //     $.ajax({
-    //         type:'GET',
-    //         url: '/get_emotions/',
-    //         success: async (response) => {
-    //             console.log("Data Found and Processed")
-    //             console.log(response);
-    //         },
-    //         error: async(response) => {
-    //             alert("No Data Found");
-    //         }
-    //     })
-
-    // }, 5000)
-
-
     // this gonna publish for other users to see
     await client.publish([audioTrack, videoTrack])  
 }
@@ -208,53 +192,53 @@ let sendData = async (blob) => {
     return result
 }
 
-let loadModels = async (userId, containerId) => {
+// let loadModels = async (userId, containerId) => {
 
-    await Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri('/static/models'),
-        faceapi.nets.faceLandmark68Net.loadFromUri('/static/models'),
-        faceapi.nets.faceRecognitionNet.loadFromUri('/static/models'),
-        faceapi.nets.faceExpressionNet.loadFromUri('/static/models')
-    ]);
+//     await Promise.all([
+//         faceapi.nets.tinyFaceDetector.loadFromUri('/static/models'),
+//         faceapi.nets.faceLandmark68Net.loadFromUri('/static/models'),
+//         faceapi.nets.faceRecognitionNet.loadFromUri('/static/models'),
+//         faceapi.nets.faceExpressionNet.loadFromUri('/static/models')
+//     ]);
 
-    videoTrack.play(userId, {fit : "cover"})
-    imageProcessing(userId, containerId)
-}
+//     videoTrack.play(userId, {fit : "cover"})
+//     imageProcessing(userId, containerId)
+// }
 
 
-let imageProcessing = (userId, containerId) => {
-    console.log("testt image processing called")
-    const video = document.getElementById(userId)
+// let imageProcessing = (userId, containerId) => {
+//     console.log("testt image processing called")
+//     const video = document.getElementById(userId)
     
-    const container = document.getElementById(containerId)
-    const canvas = faceapi.createCanvas(video)
-    container.appendChild(canvas)
+//     const container = document.getElementById(containerId)
+//     const canvas = faceapi.createCanvas(video)
+//     container.appendChild(canvas)
     
-    // Set the position of the canvas to absolute
-    canvas.style.position = 'absolute';
+//     // Set the position of the canvas to absolute
+//     canvas.style.position = 'absolute';
            
-    // Adjust the top and left properties to overlay the canvas on top of the video
-    canvas.style.top = '0';
-    canvas.style.left = '0';
+//     // Adjust the top and left properties to overlay the canvas on top of the video
+//     canvas.style.top = '0';
+//     canvas.style.left = '0';
     
-    let dynamicVideoWidth, dynamicVideoHeight, dynamicDisplaySize
+//     let dynamicVideoWidth, dynamicVideoHeight, dynamicDisplaySize
 
-    setInterval(async () => {
-        const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
-        dynamicVideoWidth = video.clientWidth;
-        dynamicVideoHeight = video.clientHeight;
-        canvas.width = dynamicVideoWidth;
-        canvas.height = dynamicVideoHeight;
-        dynamicDisplaySize = { width: dynamicVideoWidth, height: dynamicVideoHeight}
-        faceapi.matchDimensions(canvas, dynamicDisplaySize)
-        //const resizedDetections = faceapi.resizeResults(detections, displaySize)
-        const resizedDetections = faceapi.resizeResults(detections, dynamicDisplaySize)
-        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
-        faceapi.draw.drawDetections(canvas, resizedDetections)
-        //faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
-        faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
-    }, 300)
-}
+//     setInterval(async () => {
+//         const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+//         dynamicVideoWidth = video.clientWidth;
+//         dynamicVideoHeight = video.clientHeight;
+//         canvas.width = dynamicVideoWidth;
+//         canvas.height = dynamicVideoHeight;
+//         dynamicDisplaySize = { width: dynamicVideoWidth, height: dynamicVideoHeight}
+//         faceapi.matchDimensions(canvas, dynamicDisplaySize)
+//         //const resizedDetections = faceapi.resizeResults(detections, displaySize)
+//         const resizedDetections = faceapi.resizeResults(detections, dynamicDisplaySize)
+//         canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+//         faceapi.draw.drawDetections(canvas, resizedDetections)
+//         //faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
+//         faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
+//     }, 300)
+// }
 
 
 let handleUserJoined = async (user, mediaType) => {

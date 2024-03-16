@@ -19,58 +19,51 @@ body {
     margin: 0 auto;
 }
 
+
+#lobby-container {
+    display: flex;
+    height: 100vh;
+}
+
+#left-container{
+    display: flex;
+    justify-content: center;
+    max-width: 50%;
+    align-items: center;
+}
+
+
 input[name="room"]::placeholder {
-    text-transform: none; /* Prevent automatic uppercase transformation */
+    text-transform: none; 
+}
+
+#form-container {
+    text-align: center;
+    flex-direction: column;
+    max-width: 70%;
+    margin-left: 250px;
 }
 
 #image-container {
-    width: 49%;
-    /* height: 200px;  */
-    overflow: hidden; 
-    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 50%;
+    margin-right: 250px;
 }
 
 #image-container img {
-    width: 100%; 
     height: auto; 
     display: block;
-    margin-top: 60px; /* move the image down */
+    max-width: 90%; 
+    max-height: 90%;
 }
 
-
-#form-container{
-    margin-top: 1px;
-    width: 1200px;  
-    /* box-shadow: var(--shaddow); */
-    /* background-color: #fff; */
-    /* background-color:rgba(232, 233, 239, 1); */
-    padding: 30px;
-    border-radius: 5px;
-    position: fixed;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    display: flex;
-    /* flex-wrap: wrap; */
-    /* align-content: flex-start; */
-    /* flex-direction: column; */
-    width: 65%;
-}
-
-#welcome-message{
-    text-align: center;
-    margin: 20px;
-    margin-top: 100px;
-    flex-grow: 5;
-    max-width: 550px;
-}
-
-#welcome-message h1{
+#form-container h1{
     font-size: 36px;
 }
 
-#welcome-message-p{
+#form-container-p{
     font-size: 16px;
     margin-bottom: 40px; 
     color: #777;
@@ -79,9 +72,6 @@ input[name="room"]::placeholder {
     margin-right: 40px;
 }
 
-.form-field{
-    margin: 20px;
-}
 
 .form-field label{
     font-size: 16px;
@@ -91,62 +81,84 @@ input[name="room"]::placeholder {
 .form-field input {
     width: 100%;
     border: 2px solid rgba(198, 202, 219, 1);
-    /* border-radius: 5px; */
-    padding: 10px;
+    padding: 20px;
     border: none;
     box-sizing: border-box;
     background: transparent;
     border-bottom: 1px solid #ccc;
-    /* font-size: 17px; */
     font-size: 15px;
     border-radius: 0;
 }
-
-/* .form-field input[type='submit'] {
-    background-color: rgba(75, 93, 172, 1);
-    border: none;
-    color: #fff;
-} */
 
 .form-field input[type='submit'] {
     background-color: #38d39f;
     border: none;
     color: #fff;
-    transition: background-color 0.3s ease; /* Adding a smooth transition effect */
+    transition: background-color 0.3s ease;
+    height: 50px;
+    margin-top: 40px;
 }
 
 .form-field input[type='submit']:hover {
-    background-color: #258c70; /* Change the color for the hover effect */
+    background-color: #258c70;
 }
 
 
+    
 
-
-
-
-.form-field label {
-    font-size: 20px;
+#lobby-icon-par {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #777;
 }
 
-.form-field input[type="submit"] {
+#lobby-icons-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    column-gap: 1em;
+    bottom: 20px;
+}
+
+.lobby-icon-wa{
+    height: 47px;
+    width: 47px;
+    cursor: pointer;
+}
+
+.lobby-icon{
     height: 50px;
-    margin-top: 20px;
-}
+    width: 50px;
+    cursor: pointer;
+} 
 
 
 @media screen and (max-width:1080px){
-    #form-container{
-        width: 95%;
+    #lobby-container {
+        flex-direction: column;
     }
 
-    #welcome-message{
-        font-size: 24px;
+    #left-container {
+        max-width: 100%;
     }
+
+    #form-container {
+        margin-left: 0px;
+        max-width: 95%;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
     #image-container {
-       
-        width: 95%;
-        order: -1;
+        margin-right: 0px;
+        max-width: 100%;
     }
+
+    #form-container-p {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
 }
 
 /* ------- ROOM STYLING -------- */
@@ -214,35 +226,6 @@ input[name="room"]::placeholder {
 } */
 
 /* ---- BUTTONS ------ */
-
-#lobby-icon-par {
-    margin-top: 40px;
-    margin-bottom: 20px;
-    color: #777;
-}
-
-#lobby-icons-wrapper {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    column-gap: 1em;
-    /* position: fixed; */
-    bottom: 20px;
-}
-
-.lobby-icon-wa{
-    height: 47px;
-    width: 47px;
-    cursor: pointer;
-    /* border-radius: 50%; */
-}
-
-.lobby-icon{
-    height: 50px;
-    width: 50px;
-    cursor: pointer;
-    /* border-radius: 50%; */
-}
 
 #controls-wrapper{
     display: flex;
