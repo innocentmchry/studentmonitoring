@@ -66,3 +66,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Some dependencies of localhost and lan connection
+# ssl/
+# gunicorn.conf.py
