@@ -131,7 +131,7 @@ let joinAndDisplayLocalStream = async() => {
         document.getElementById('result-name').innerText = RESULT
         // console.log(result.result)
 
-    }, 5000)
+    }, 10000)
 
     // this gonna publish for other users to see
     await client.publish([audioTrack, videoTrack])  
