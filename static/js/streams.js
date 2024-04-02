@@ -425,20 +425,20 @@ let clearData = async () => {
 
 joinAndDisplayLocalStream()
 
-// const videoContainers = document.querySelectorAll('.video-container')
-// numberOfElements = videoContainers.length
-// var videoStream = document.getElementById('video-streams')
+const videoContainers = document.querySelectorAll('.video-container')
+numberOfElements = videoContainers.length
+var videoStream = document.getElementById('video-streams')
 
-// if (numberOfElements > 9) {
-//     columns = 4
-//     videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`            
-// } else if (numberOfElements > 4) {
-//     columns = 3
-//     videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
-// } else if (numberOfElements > 1){
-//     columns = 2
-//     videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
-// }
+if (numberOfElements > 9) {
+    columns = 4
+    videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`            
+} else if (numberOfElements > 4) {
+    columns = 3
+    videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
+} else if (numberOfElements > 1){
+    columns = 2
+    videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
+}
 
 
 // if member closes instead of leave button

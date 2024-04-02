@@ -64,7 +64,6 @@ def createMember(request):
     
     # check if data['email'] is contained in a database named Admin which has column named email, if so assign the role as admin, other wise asign as participant
 
-    print(data)
     email = data['email']
     
     try:
@@ -117,7 +116,6 @@ def predictor(request):
     # name = request.POST['name']
     uid = request.POST['uid']
     
-    print(f"uid is {uid}")
     blob = request.FILES['image'].read()
     thumb = Image.open(BytesIO(blob))
     rgb_im = thumb.convert('RGB')
@@ -143,7 +141,7 @@ def predictor(request):
     face_cascade = cv2.CascadeClassifier('./savedModels/haarcascade_frontalface_default.xml') 
 
     faces = face_cascade.detectMultiScale(img, 1.3, 4)
-    print('Number of detected faces:', len(faces))
+    # print('Number of detected faces:', len(faces))
             
     # fix more than one faces later when you get time
     # if len(faces) > 0:
@@ -187,7 +185,6 @@ def predictor(request):
     str_prediction_a = str(prediction_a[0][0])
 
     classification = f"Valence: {str_prediction_v}, Arousal: {str_prediction_a}"
-    print(classification)
     
     emotion = ""
     
@@ -242,9 +239,7 @@ def predictor(request):
 
 @csrf_exempt
 def getEmotions(request):
-    print("Get Emotions is Accessed")
     queryset = Student_Emotion.objects.all()[:50]
-    print(queryset)
     return JsonResponse({"users":list(queryset.values())})
 
 def summary(request):
@@ -259,20 +254,21 @@ def calculateSummary(request):
     
     for student_emotion in student_emotions:
         total_emotions = student_emotion.curious + student_emotion.confusion + student_emotion.boredom + student_emotion.hopefullness + student_emotion.neutral
-        curious_percentage = (student_emotion.curious / total_emotions) * 100
-        confusion_percentage = (student_emotion.confusion / total_emotions) * 100
-        boredom_percentage = (student_emotion.boredom / total_emotions) * 100
-        hopefullness_percentage = (student_emotion.hopefullness / total_emotions) * 100
-        neutral_percentage = (student_emotion.neutral / total_emotions) * 100
-        summary_object = Summary(
-            name=student_emotion.name,
-            curious=round(curious_percentage, 2),
-            confusion=round(confusion_percentage, 2),
-            boredom=round(boredom_percentage, 2),
-            hopefullness=round(hopefullness_percentage, 2),
-            neutral=round(neutral_percentage, 2)
-        )
-        summary_objects.append(summary_object)
+        if total_emotions != 0:
+            curious_percentage = (student_emotion.curious / total_emotions) * 100
+            confusion_percentage = (student_emotion.confusion / total_emotions) * 100
+            boredom_percentage = (student_emotion.boredom / total_emotions) * 100
+            hopefullness_percentage = (student_emotion.hopefullness / total_emotions) * 100
+            neutral_percentage = (student_emotion.neutral / total_emotions) * 100
+            summary_object = Summary(
+                name=student_emotion.name,
+                curious=round(curious_percentage, 2),
+                confusion=round(confusion_percentage, 2),
+                boredom=round(boredom_percentage, 2),
+                hopefullness=round(hopefullness_percentage, 2),
+                neutral=round(neutral_percentage, 2)
+            )
+            summary_objects.append(summary_object)
 
     Summary.objects.bulk_create(summary_objects)
 
@@ -466,6 +462,5 @@ def checkEmpty(request):
     if Summary.objects.count() != 0:
         empty = 0
 
-    print(f'returned empty value is {empty}')
     return JsonResponse({'empty': empty})
     
