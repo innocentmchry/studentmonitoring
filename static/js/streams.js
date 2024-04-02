@@ -30,25 +30,25 @@ let joinAndDisplayLocalStream = async() => {
 
     //Custom Video Track
 
-    var constraints = window.constraints = { audio: true, video: true};    
-    await navigator.mediaDevices.getUserMedia(constraints)
-        .then(function(stream) {
-            // Get all the available video tracks.
-            var videoTracks = stream.getVideoTracks();
-            // console.log('Using video device: ' + videoTracks[0].label);
+    // var constraints = window.constraints = { audio: true, video: true};    
+    // await navigator.mediaDevices.getUserMedia(constraints)
+    //     .then(function(stream) {
+    //         // Get all the available video tracks.
+    //         var videoTracks = stream.getVideoTracks();
+    //         // console.log('Using video device: ' + videoTracks[0].label);
 
            
-            videoTrack = AgoraRTC.createCustomVideoTrack({
-                mediaStreamTrack: videoTracks[0],
-            });
+    //         videoTrack = AgoraRTC.createCustomVideoTrack({
+    //             mediaStreamTrack: videoTracks[0],
+    //         });
 
-        })
-        .catch(function(error) {
-        console.log(error);
-        });
+    //     })
+    //     .catch(function(error) {
+    //     console.log(error);
+    //     });
 
 
-    // videoTrack = await AgoraRTC.createCameraVideoTrack()
+    videoTrack = await AgoraRTC.createCameraVideoTrack()
 
     audioTrack = await AgoraRTC.createMicrophoneAudioTrack()
 
@@ -113,7 +113,8 @@ let joinAndDisplayLocalStream = async() => {
     //     videoTrack.play(`user-${UID}`, {fit : "cover"})
     // }
 
-    videoTrack.play(`user-${UID}`, {fit : "cover"})
+    // videoTrack.play(`user-${UID}`, {fit : "cover"})
+    videoTrack.play(`user-${UID}`)
 
     setInterval(async () => {
 
