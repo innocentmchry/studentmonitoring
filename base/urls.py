@@ -13,7 +13,7 @@ urlpatterns = [
     path('predict_member/', views.predictor),
     path('get_emotions/', views.getEmotions),
     path('calculate_summary/', views.calculateSummary),
-    path('loadSummary/', views.loadSummary),
+    path('summary/', views.loadSummary),
     path('calculate_first_component/', views.calculateFirstComponent),
     path('calculate_second_component/', views.calculateSecondComponent),
     path('calculate_third_component/', views.calculateThirdComponent),

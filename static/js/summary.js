@@ -102,6 +102,7 @@ $.ajax({
 
       for(i = 0; i < response.rows_list.length; i++){
         charPieId = `charPieChart${i}`
+        charBarId = `charBarChart${i}`
         charScatterId = `charScatterChart${i}`
 
 
@@ -110,6 +111,11 @@ $.ajax({
                             <div class="pieChart">
                                 <canvas id="${charPieId}"></canvas>
                             </div>
+
+                            <div class="pieChart">
+                                <canvas id="${charBarId}"></canvas>
+                            </div>
+
                             <div class="scatterChart">
                                 <canvas id="${charScatterId}"></canvas>
                             </div>
@@ -118,6 +124,7 @@ $.ajax({
         document.getElementById('thirdComponent').insertAdjacentHTML('beforeend', components1)
 
         createUserPieChart(charPieId, i, labels, response.rows_list)
+        createUserBarChart(charBarId, i, labels, response.rows_list)
         createUserScatterChart(charScatterId, response.rows_list[i][1], response.data)
 
 
@@ -186,6 +193,43 @@ let createUserPieChart = (id, user, labels, rows) => {
   new Chart(ctx, config);
 }
 
+
+let createUserBarChart = (id, user, labels, rows) => {
+  const ctx = document.getElementById(id);
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Percentage wise distribution',
+        data: rows[user].slice(2),
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.8)',
+          'rgba(255, 99, 132, 0.8)',
+          'rgba(255, 159, 64, 0.8)',
+          'rgba(255, 205, 86, 0.8)',
+          'rgba(75, 192, 192, 0.8)'
+        ],
+        borderColor: [
+          'rgb(54, 162, 235)',
+          'rgb(255, 99, 132)',
+          'rgb(255, 159, 64)',
+          'rgb(255, 205, 86)',
+          'rgb(75, 192, 192)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  })
+}
 
 
 

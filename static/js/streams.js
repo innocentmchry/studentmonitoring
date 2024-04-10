@@ -78,6 +78,7 @@ let joinAndDisplayLocalStream = async() => {
  
     if (member.role == "admin"){
         ADMIN = true
+        
         let empty = 1 // let it be empty, empty = 1 (true)
 
         $.ajax({
@@ -101,6 +102,9 @@ let joinAndDisplayLocalStream = async() => {
         console.log('value of empty is: ' + empty)
 
       
+    } else {
+        document.getElementById('side-panel').style.width = '0%';
+        document.getElementById('main-panel').style.width = '100%';
     }
 
     // if instructor then this
@@ -116,6 +120,7 @@ let joinAndDisplayLocalStream = async() => {
     // videoTrack.play(`user-${UID}`, {fit : "cover"})
     videoTrack.play(`user-${UID}`)
 
+
     setInterval(async () => {
 
         // ImageData
@@ -126,13 +131,15 @@ let joinAndDisplayLocalStream = async() => {
 
         let result = await sendData(blob_data)
         
-        updateEmotion()
+        if (ADMIN){
+            updateEmotion()
+        }
 
         RESULT = result.result
         document.getElementById('result-name').innerText = RESULT
         // console.log(result.result)
 
-    }, 10000)
+    }, 5000)
 
     // this gonna publish for other users to see
     await client.publish([audioTrack, videoTrack])  
@@ -335,7 +342,7 @@ let leaveAndRemoveLocalStream = async () => {
         await calculateSummary()
     }
     else{
-        window.open('/loadSummary','_self')
+        window.open('/summary','_self')
     }
 
 }
@@ -345,7 +352,7 @@ let calculateSummary = async () => {
             type: 'GET',
             url: '/calculate_summary/',
             success: async (response) => {
-                window.open('/loadSummary/', '_self')
+                window.open('/summary/', '_self')
             },
             error: async(response) => {
                 alert("No Data Found");
@@ -443,7 +450,7 @@ if (numberOfElements > 9) {
 
 
 // if member closes instead of leave button
-window.addEventListener('beforeunload', deleteMember)
+// window.addEventListener('beforeunload', deleteMember)
 
 document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLocalStream)
 document.getElementById('camera-btn').addEventListener('click', toggleCamera)
