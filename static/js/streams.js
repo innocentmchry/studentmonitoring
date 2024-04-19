@@ -61,7 +61,9 @@ let joinAndDisplayLocalStream = async() => {
         },
     });
 
-    audioTrack = await AgoraRTC.createMicrophoneAudioTrack()
+    audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
+        encoderConfig: "speech_standard",
+    });
 
     let member = await createMember()
 
