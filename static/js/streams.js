@@ -50,7 +50,16 @@ let joinAndDisplayLocalStream = async() => {
 
 
 
-    videoTrack = await AgoraRTC.createCameraVideoTrack()
+    videoTrack = await AgoraRTC.createCameraVideoTrack({
+        optimizationMode: "detail",
+        encoderConfig: {
+            width: 320,
+            height: 180,
+            frameRate: 15,
+            bitrateMin: 140,
+            bitrateMax: 140,
+        },
+    });
 
     audioTrack = await AgoraRTC.createMicrophoneAudioTrack()
 
@@ -103,11 +112,11 @@ let joinAndDisplayLocalStream = async() => {
         })
         console.log('value of empty is: ' + empty)
 
-      
-    } else {
-        document.getElementById('side-panel').style.width = '0%';
-        document.getElementById('main-panel').style.width = '100%';
     }
+    // } else {
+    //     document.getElementById('side-panel').style.width = '0%';
+    //     document.getElementById('main-panel').style.width = '100%';
+    // }
 
     // if instructor then this
 
@@ -133,9 +142,10 @@ let joinAndDisplayLocalStream = async() => {
 
         let result = await sendData(blob_data)
         
-        if (ADMIN){
-            updateEmotion()
-        }
+        // if (ADMIN){
+        //     updateEmotion()
+        // }
+        updateEmotion()
 
         RESULT = result.result
         document.getElementById('result-name').innerText = RESULT
