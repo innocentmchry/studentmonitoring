@@ -22,5 +22,6 @@ urlpatterns = [
     path('download_csv_file2/', views.downloadCsvFile2),
     path('check_admin_clear_data/', views.checkAdminClearData),
     path('check_admin_recalculate_data/', views.recalculate),
-    path('check_empty/', views.checkEmpty)
+    path('check_empty/', views.checkEmpty),
+    path('toggle_screenshare/', views.toggleScreenShare)
 ]

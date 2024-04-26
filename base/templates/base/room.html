@@ -5,12 +5,15 @@
 <main>
     <!-- main panel-->
     <div id="main-panel">
-        <section id="room-name-wrapper">
+        {% comment %} <section id="room-name-wrapper">
             <p>Room Name: <span id="room-name"></span></p>
         </section>
     
         <section id="room-name-wrapper">
             <p>Prediction: <span id="result-name"></span></p>
+        </section> {% endcomment %}
+
+        <section id="screen-share-section">
         </section>
     
         <section id="video-streams">
@@ -23,6 +26,10 @@
     
             <div class="icon-wrapper">
                 <img class="control-icon" id="camera-btn" src="{% static 'images/video.svg' %}" />
+            </div>
+
+            <div class="icon-wrapper">
+                <img class="control-icon" id="screenshare-btn" src="{% static 'images/screenshare.png' %}" />
             </div>
     
             <div class="icon-wrapper">

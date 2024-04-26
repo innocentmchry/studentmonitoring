@@ -9,6 +9,7 @@ class RoomMember(models.Model):
     uid = models.CharField(max_length=1000)
     room_name = models.CharField(max_length=200)
     role = models.CharField(max_length=200)
+    screensharing = models.BooleanField(default=False)
     
     def __str__(self):
         return self.name

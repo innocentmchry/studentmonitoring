@@ -16,10 +16,11 @@ let remoteUsers = {}
 let ADMIN = false
 
 let joinAndDisplayLocalStream = async() => {
-    document.getElementById('room-name').innerText = CHANNEL
+    // document.getElementById('room-name').innerText = CHANNEL
 
     client.on('user-published', handleUserJoined)
     client.on('user-left', handleUserLeft)
+    client.on('user-unpublished', handleUserUnpublished)
 
     try {
         await client.join(APP_ID, CHANNEL, TOKEN, UID)
@@ -131,7 +132,7 @@ let joinAndDisplayLocalStream = async() => {
     // }
 
     // videoTrack.play(`user-${UID}`, {fit : "cover"})
-    videoTrack.play(`user-${UID}`)
+    videoTrack.play(`user-${UID}`, {mirror : false})
 
 
     setInterval(async () => {
@@ -149,11 +150,11 @@ let joinAndDisplayLocalStream = async() => {
         // }
         updateEmotion()
 
-        RESULT = result.result
-        document.getElementById('result-name').innerText = RESULT
-        // console.log(result.result)
+        // RESULT = result.result
+        // document.getElementById('result-name').innerText = RESULT
 
-    }, 7500)
+
+    }, 15000)
 
     // this gonna publish for other users to see
     await client.publish([audioTrack, videoTrack])  
@@ -264,6 +265,7 @@ let sendData = async (blob) => {
 
 
 let handleUserJoined = async (user, mediaType) => {
+
     //add the user to remote users
     remoteUsers[user.uid] = user
 
@@ -272,6 +274,7 @@ let handleUserJoined = async (user, mediaType) => {
 
 
     if(mediaType === 'video'){
+
         let player = document.getElementById(`user-container-${user.uid}`)
 
         // if user already exist
@@ -281,42 +284,57 @@ let handleUserJoined = async (user, mediaType) => {
 
         let member = await getMember(user)
 
-        player = `<div class="video-container" id="user-container-${user.uid}">
-        <div class="username-wrapper"><span class="user-name">${member.name}</span></div>
-        <video class="video-player" id="user-${user.uid}" autoplay></video>
-        </div>`
+        if (member.screensharing === true){
+            let ssplayer = `<div class="video-container" id="screenshare-container-${user.uid}">
+            <div class="username-wrapper"><span class="user-name">Screen Sharing by ${member.name}</span></div>
+            <video class="video-player" id="screensharevideo" autoplay ></video>
+            </div>`
 
-
-
-
+            document.getElementById('screen-share-section').insertAdjacentHTML('beforeend', ssplayer)
         
-        document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
-        user.videoTrack.play(`user-${user.uid}`)
-
-        // if (ADMIN){
-        //     imageProcessing(`user-${user.uid}`,`user-container-${user.uid}`)
-        // }
-
-        const videoContainers = document.querySelectorAll('.video-container')
-        numberOfElements = videoContainers.length
-        var videoStream = document.getElementById('video-streams')
+            screenPlayerContainer = "screensharevideo"
         
-        if (numberOfElements > 9) {
-            columns = 4
-            videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`            
-        } else if (numberOfElements > 4) {
-            columns = 3
-            videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
-        } else if (numberOfElements > 1){
-            columns = 2
-            videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
-        }
+            user.videoTrack.play(screenPlayerContainer, {mirror : false});
+
+        }else {
+            player = `<div class="video-container" id="user-container-${user.uid}">
+            <div class="username-wrapper"><span class="user-name">${member.name}</span></div>
+            <video class="video-player" id="user-${user.uid}" autoplay></video>
+            </div>`
     
+    
+    
+    
+            
+            document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
+            user.videoTrack.play(`user-${user.uid}`)
+    
+            // if (ADMIN){
+            //     imageProcessing(`user-${user.uid}`,`user-container-${user.uid}`)
+            // }
+    
+            const videoContainers = document.querySelectorAll('.video-container')
+            numberOfElements = videoContainers.length
+            var videoStream = document.getElementById('video-streams')
+            
+            if (numberOfElements > 9) {
+                columns = 4
+                videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`            
+            } else if (numberOfElements > 4) {
+                columns = 3
+                videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
+            } else if (numberOfElements > 1){
+                columns = 2
+                videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
+            }
+        }
+
     }
 
     if(mediaType === 'audio'){
         user.audioTrack.play()
     }
+
 
 
 }
@@ -341,6 +359,21 @@ let handleUserLeft = async (user) => {
         videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
     }
 }
+
+let handleUserUnpublished = async (user, mediaType) => {
+    if(mediaType == "video"){
+        console.log('someone unpublished a video')
+        let member = await getMember(user)
+
+        if (member.screensharing === false){
+            console.log('screensharing is false, removing the container')
+            console.log('trying to remove screenshare container of uid')
+            console.log(user.uid)
+            document.getElementById(`screenshare-container-${user.uid}`).remove()
+        }
+    }
+}
+
 
 let leaveAndRemoveLocalStream = async () => {
     audioTrack.stop()
@@ -466,6 +499,115 @@ if (numberOfElements > 9) {
 // if member closes instead of leave button
 // window.addEventListener('beforeunload', deleteMember)
 
+let screenShared = 0;
+let screenTrack = []
+let screenShare = async (e) => {
+    if(ADMIN){
+        if (screenShared == 0) {
+            //toggle screen share here
+    
+            let response = await fetch(`/toggle_screenshare/?UID=${UID}&room_name=${CHANNEL}`)
+    
+            // let member = await toggleScreenShare(user)
+    
+            client.unpublish([videoTrack]);
+            videoTrack.close();
+            document.getElementById(`user-container-${UID}`).remove()
+    
+            let ssplayer = `<div class="video-container" id="screenshare-container-${UID}">
+            <div class="username-wrapper"><span class="user-name">Screen Sharing by ${NAME}</span></div>
+            <video class="video-player" id="screensharevideo" autoplay ></video>
+            </div>`
+            
+            document.getElementById('screen-share-section').insertAdjacentHTML('beforeend', ssplayer)
+            
+            screenPlayerContainer = "screensharevideo"
+            screenTrack = await AgoraRTC.createScreenVideoTrack({
+                encoderConfig: "720p"
+              });
+    
+            client.publish([screenTrack]);
+        
+            screenTrack.play(screenPlayerContainer, {mirror : false});
+            e.target.style.backgroundColor = 'rgb(255, 80, 80, 1)'
+            screenShared = 1
+        }else {
+    
+            let response = await fetch(`/toggle_screenshare/?UID=${UID}&room_name=${CHANNEL}`)
+            
+            client.unpublish([screenTrack]);
+            screenTrack.close();
+            document.getElementById(`screenshare-container-${UID}`).remove()
+    
+            let vplayer = `<div class="video-container" id="user-container-${UID}">
+            <div class="username-wrapper"><span class="user-name">${NAME}</span></div>
+            <video class="video-player" id="user-${UID}" autoplay ></video>
+            </div>`
+    
+            document.getElementById('video-streams').insertAdjacentHTML('beforeend', vplayer)
+    
+            videoTrack = await AgoraRTC.createCameraVideoTrack({
+                optimizationMode: "detail",
+                encoderConfig: {
+                    width: 320,
+                    height: 180,
+                    frameRate: 15,
+                    bitrateMin: 140,
+                    bitrateMax: 140,
+                },
+            });
+            client.publish([videoTrack]);
+    
+            videoTrack.play(`user-${UID}`, {mirror : false});
+            e.target.style.backgroundColor = '#fff'
+            screenShared = 0
+        }
+    }
+    else{
+        alert('Permission Denied')
+    }
+    
+    
+
+
+
+    // screenPlayerContainer = `user-${UID}`
+    // if (screenShared == 0) {
+        
+
+    //     screenTrack = await AgoraRTC.createScreenVideoTrack();
+    
+    //     client.unpublish([videoTrack]);
+    //     videoTrack.close();
+    
+    //     client.publish([screenTrack]);
+    
+    //     screenTrack.play(screenPlayerContainer, {mirror : false});
+    //     e.target.style.backgroundColor = 'rgb(255, 80, 80, 1)'
+    //     screenShared = 1
+    // }else {
+    //     client.unpublish([screenTrack]);
+    //     screenTrack.close();
+
+    //     videoTrack = await AgoraRTC.createCameraVideoTrack({
+    //         optimizationMode: "detail",
+    //         encoderConfig: {
+    //             width: 320,
+    //             height: 180,
+    //             frameRate: 15,
+    //             bitrateMin: 140,
+    //             bitrateMax: 140,
+    //         },
+    //     });
+    //     client.publish([videoTrack]);
+
+    //     videoTrack.play(screenPlayerContainer, {mirror : false});
+    //     e.target.style.backgroundColor = '#fff'
+    //     screenShared = 0
+    // }
+}
+
 document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLocalStream)
 document.getElementById('camera-btn').addEventListener('click', toggleCamera)
+document.getElementById('screenshare-btn').addEventListener('click', screenShare)
 document.getElementById('mic-btn').addEventListener('click', toggleMic)

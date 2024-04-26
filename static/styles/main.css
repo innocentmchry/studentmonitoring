@@ -173,6 +173,17 @@ input[name="room"]::placeholder {
     color: #777;
 }
 
+#screen-share-section{
+    display: grid;
+    grid-gap: 10px;
+    width: 75%;
+    margin: 0 auto;
+    margin-bottom: 25px;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+}
+    
+
 #video-streams{
     display: grid;
     /* height: 85vh; */
@@ -262,6 +273,7 @@ input[name="room"]::placeholder {
 }
 
 #main-panel {
+    margin-top: 25px;
     width: 65%;
     float: left;
 }

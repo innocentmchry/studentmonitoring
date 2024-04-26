@@ -80,6 +80,25 @@ def createMember(request):
     )
     return JsonResponse({'name':data['name'], 'role':role}, safe=False)
 
+@csrf_exempt
+def toggleScreenShare(request):
+    uid = request.GET.get('UID')
+    room_name = request.GET.get('room_name')
+    member = RoomMember.objects.get(
+        uid=uid,
+        room_name=room_name,        
+    )
+    if member.screensharing == True:
+        member.screensharing = False
+        print('screen sharing stopped')
+    else:
+        member.screensharing = True
+        print('screen sharing initiated')
+    
+    member.save()
+    return JsonResponse({})
+
+
 
 def getMember(request):
     # getting the parameters from the get request
@@ -96,7 +115,8 @@ def getMember(request):
     # returning back the name    
     name = member.name
     role = member.role
-    return JsonResponse({'name':name, 'role':role}, safe=False)
+    screensharing = member.screensharing
+    return JsonResponse({'name':name, 'role':role, 'screensharing':screensharing}, safe=False)
 
 @csrf_exempt
 def deleteMember(request):
@@ -432,6 +452,7 @@ def checkAdminClearData(request):
         role = "participant"
     
     if role == 'admin':
+        RoomMember.objects.all().delete()
         Summary.objects.all().delete()
         Status.objects.all().delete()
         Student_Emotion.objects.all().delete()
