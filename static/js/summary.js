@@ -72,6 +72,9 @@ $.ajax({
         var hopefullList = $('.s3');
         var neutralList = $('.s4');
 
+        console.log(response.hopefull_person)
+        console.log(response.neutral_person)
+
         response.curious_person.forEach(item => myFunction(item, curiousList))
         response.confused_person.forEach(item => myFunction(item, confusedList))
         response.bored_person.forEach(item => myFunction(item, boredList))
@@ -113,7 +116,7 @@ $.ajax({
                             </div>
 
                             <div class="pieChart">
-                                <canvas id="${charBarId}"></canvas>
+                                <canvas class="barChartOfThirdComponent" id="${charBarId}"></canvas>
                             </div>
 
                             <div class="scatterChart">
@@ -124,7 +127,7 @@ $.ajax({
         document.getElementById('thirdComponent').insertAdjacentHTML('beforeend', components1)
 
         createUserPieChart(charPieId, i, labels, response.rows_list)
-        createUserBarChart(charBarId, i, labels, response.rows_list)
+        createUserBarChart(charBarId, i, labels, response.rows_list, 'Emotions Count')
         createUserScatterChart(charScatterId, response.rows_list[i][1], response.data)
 
 
@@ -160,7 +163,7 @@ $.ajax({
         let components2 = `<div class="usersOfFourthComponent">
                               <div class="namesOfFourthComponent"><h3>${name}</h3></div>
                               <div class="lineChart">
-                                  <canvas id="${id}"></canvas>
+                                  <canvas class="lineCanvas" id="${id}"></canvas>
                               </div>
                           </div>`
         
@@ -194,7 +197,7 @@ let createUserPieChart = (id, user, labels, rows) => {
 }
 
 
-let createUserBarChart = (id, user, labels, rows) => {
+let createUserBarChart = (id, user, labels, rows, legend) => {
   const ctx = document.getElementById(id);
 
   new Chart(ctx, {
@@ -202,7 +205,7 @@ let createUserBarChart = (id, user, labels, rows) => {
     data: {
       labels: labels,
       datasets: [{
-        label: 'Percentage wise distribution',
+        label: legend,
         data: rows[user].slice(2),
         backgroundColor: [
           'rgba(54, 162, 235, 0.8)',
@@ -222,6 +225,9 @@ let createUserBarChart = (id, user, labels, rows) => {
       }]
     },
     options: {
+      responsive: false,
+      maintainAspectRatio: false,
+      aspectRatio: 1,
       scales: {
         y: {
           beginAtZero: true
@@ -307,16 +313,19 @@ let createUserLineChart = (id, mylabels, mydata) => {
 
       const customLabels = {
         '0': 'Neutral',
-        '20': 'Hopefull',
-        '40': 'Curious',
-        '-20': 'Confused',
-        '-40': 'Bored'
+        '10': 'Hopefull',
+        '20': 'Curious',
+        '-10': 'Confused',
+        '-20': 'Bored'
       };
 
       const config = {
         type: 'line',
         data: data,
         options: {
+          responsive: false,
+          maintainAspectRatio: false,
+          aspectRatio: 4,
           scales: {
             x: {
               title: {

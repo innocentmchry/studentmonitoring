@@ -398,10 +398,10 @@ def calculateFourthComponent(request):
     for statu in status:
         emotion_values = {
             'neutral' : 0,
-            'hopefullness' : 20,
-            'curious' : 40,
-            'confusion' : -20,
-            'boredom' : -40
+            'hopefullness' : 10,
+            'curious' : 20,
+            'confusion' : -10,
+            'boredom' : -20
         }
         values = []
         if statu.name not in dict.keys():

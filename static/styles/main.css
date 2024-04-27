@@ -462,7 +462,7 @@ table {
     max-width: 1440px;
     border-radius: 5px;
     /* background: #EAF6F6; */
-    background: rgba(232, 233, 239, 1);
+    /* background: rgba(232, 233, 239, 1); */
     box-shadow: 0 2px 6px 0 rgba(0,0,0, .3);
 }
 .listTitle{
@@ -487,7 +487,7 @@ li{
     min-width: 19%;
     margin: 2% .35%;
     display: inline-flex;
-    box-shadow: 0 2px 4px rgba(0,0,0, .2);
+    box-shadow: 0 2px 4px 2px rgba(0,0,0, .2);
 }
 .SG .sgLi:hover{
     box-shadow:0 5px 10px rgba(0,0,0,.15);}
@@ -495,7 +495,7 @@ li{
     width: 100%;
     height: 100vh;
     padding: 1% 2%;
-    background: #F5F7F8;
+    /* background: #F5F7F8; */
     min-height: 200px;
     max-height: 220px;
     box-sizing: border-box;
@@ -529,17 +529,23 @@ li{
 }
 
 .usersOfThirdComponent {
+    height: 350px;
     margin: auto;
     margin-bottom: 10px;
     padding: 1% 2%;
     max-width: 1440px;
     border-radius: 5px;
     /* background: #EAF6F6; */
-    background: rgba(232, 233, 239, 1);
+    /* background: rgba(232, 233, 239, 1); */
     box-shadow: 0 2px 6px 0 rgba(0,0,0, .3);
 }
 
+/* .barChartOfThirdComponent{
+    
+} */
+
 .usersOfFourthComponent {
+
     display: flex;
     margin: auto;
     margin-bottom: 10px;
@@ -547,7 +553,7 @@ li{
     max-width: 1440px;
     border-radius: 5px;
     /* background: #EAF6F6; */
-    background: rgba(232, 233, 239, 1);
+    /* background: rgba(232, 233, 239, 1); */
     box-shadow: 0 2px 6px 0 rgba(0,0,0, .3);
 }
 
@@ -556,8 +562,20 @@ li{
 }
 
 .lineChart {
-    width: 40%;
-    margin: auto
+    /* width: 70%;
+    height: 20%; */
+    width: 1200px;
+    height: 300px;
+    /* overflow-x: auto; */
+    overflow-y: auto;
+    margin-left: 0;
+}
+
+.lineCanvas{
+    margin-left: 0;
+    /* height: 350px; */
+    height: 300px !important;
+    width: 1200px !important;
 }
 
 #downloadSection {
@@ -569,57 +587,99 @@ li{
     margin-top: 20px;
 }
 
-.downloadButton {
-    background-color: #04AA6D; /* Green */
-    border: none;
-    color: white;
-    padding: 16px 32px;
-    text-align: center;
-    text-decoration: none;
+.downloadButton {    
+    margin-top: auto;
+    margin-bottom: auto;    
     display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
+    outline: 0;
+    appearance: none;
+    padding: 0px 12px;
+    border: 0px solid transparent;
+    border-radius: 4px;
+    text-decoration: none;
     cursor: pointer;
+    background-color: rgb(9, 128, 76);
+    box-shadow: rgb(19 170 82 / 40%) 0px 2px 3px;
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    font-weight: 400;
+    height: 36px;
+    transition: all 150ms ease-in-out 0s;
+    :hover {
+        color: rgb(255, 255, 255);
+        background-color: rgb(17, 97, 73);
+        box-shadow: rgb(19 170 82 / 40%) 0px 2px 3px, rgb(195 231 202) 0px 0px 0px 3px;
+    }
+
+
 }
+
 
 .clearBtn {
     position: absolute;
-    right: 165px;
+    right: 195px;
     top: 7%;
     transform: translateY(-50%);
+    
 }
 
 #clearBtn {
-    background-color: #aa0444;
-    border: none;
-    color: white;
-    padding: 16px 32px;
-    text-decoration: none;
+    /* background-color: #aa0444; */
+    
     display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
+    outline: 0;
+    appearance: none;
+    padding: 0px 12px;
+    border: 0px solid transparent;
+    border-radius: 4px;
+    text-decoration: none;
     cursor: pointer;
+    background-color: #aa0444;
+    box-shadow: #610227 0px 2px 3px;
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    font-weight: 400;
+    height: 46px;
+    transition: all 150ms ease-in-out 0s;
+    :hover {
+        color: rgb(255, 255, 255);
+        background-color: rgb(17, 97, 73);
+        box-shadow: rgb(19 170 82 / 40%) 0px 2px 3px, rgb(195 231 202) 0px 0px 0px 3px;
+    }
+
 }
 
 #recalculateBtn {
-    background-color: #0e0185;
-    border: none;
-    color: white;
-    padding: 16px 32px;
-    text-decoration: none;
+    
+    
     display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
+    outline: 0;
+    appearance: none;
+    padding: 0px 12px;
+    border: 0px solid transparent;
+    border-radius: 4px;
+    text-decoration: none;
     cursor: pointer;
+    background-color: rgb(9, 128, 76);
+    box-shadow: rgb(19 170 82 / 40%) 0px 2px 3px;
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    font-weight: 400;
+    height: 46px;
+    transition: all 150ms ease-in-out 0s;
+    :hover {
+        color: rgb(255, 255, 255);
+        background-color: rgb(17, 97, 73);
+        box-shadow: rgb(19 170 82 / 40%) 0px 2px 3px, rgb(195 231 202) 0px 0px 0px 3px;
+    }
+
+
 }
 
 
 .recalculateBtn {
     position: absolute;
-    left: 165px;
+    left: 195px;
     top: 7%;
     transform: translateY(-50%);
 }

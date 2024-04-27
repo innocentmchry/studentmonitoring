@@ -138,23 +138,23 @@ let joinAndDisplayLocalStream = async() => {
     setInterval(async () => {
 
         // ImageData
-        const image = videoTrack.getCurrentFrameData();
+        if(videoTrack.isPlaying){
+            const image = videoTrack.getCurrentFrameData();
 
-        // Blob Data
-        blob_data = await ImageDataToBlob(image)
+            // Blob Data
+            blob_data = await ImageDataToBlob(image)
+    
+            let result = await sendData(blob_data)
+            
+            // if (ADMIN){
+            //     updateEmotion()
+            // }
+            // document.getElementById('result-name').innerText = RESULT
+        }
 
-        let result = await sendData(blob_data)
-        
-        // if (ADMIN){
-        //     updateEmotion()
-        // }
         updateEmotion()
 
-        // RESULT = result.result
-        // document.getElementById('result-name').innerText = RESULT
-
-
-    }, 15000)
+    }, 5000)
 
     // this gonna publish for other users to see
     await client.publish([audioTrack, videoTrack])  
@@ -177,11 +177,6 @@ let updateEmotion = () => {
         }
     })
 }
-
-
-
-
-
 
 const ImageDataToBlob = function(imageData){
     let w = imageData.width;
@@ -504,7 +499,15 @@ let screenTrack = []
 let screenShare = async (e) => {
     if(ADMIN){
         if (screenShared == 0) {
-            //toggle screen share here
+            
+            try{
+                screenTrack = await AgoraRTC.createScreenVideoTrack({
+                    encoderConfig: "480p"
+                  });
+            } catch (error) {
+                alert("Select a window or tab to share")
+                return
+            }
     
             let response = await fetch(`/toggle_screenshare/?UID=${UID}&room_name=${CHANNEL}`)
     
@@ -520,11 +523,8 @@ let screenShare = async (e) => {
             </div>`
             
             document.getElementById('screen-share-section').insertAdjacentHTML('beforeend', ssplayer)
-            
             screenPlayerContainer = "screensharevideo"
-            screenTrack = await AgoraRTC.createScreenVideoTrack({
-                encoderConfig: "720p"
-              });
+
     
             client.publish([screenTrack]);
         
