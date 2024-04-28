@@ -263,26 +263,18 @@ input[name="room"]::placeholder {
 
 /* ------------- table ------------- */
 
-#side-panel {
-    float: right;
-    top: 0;
-    right: 0;
-    width: 35%; /* Adjust the width as needed */
-    height: 100%; /* Take full height of the viewport */
-    overflow-y: auto; /* Add vertical scroll if content exceeds the height */
-}
 
 #main-panel {
     margin-top: 25px;
-    width: 65%;
+    width: 100%;
     float: left;
 }
 
 #side-panel {
-    left:0; right:0;
-    top: 50px;
-    /* margin: auto; */
-    width: 450px;
+    float: right;
+    height: 100%; 
+    overflow-y: auto; 
+    width: 0;
     border-radius: 5px;
     background: #fff;
     overflow: hidden;

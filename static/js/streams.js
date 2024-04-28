@@ -62,6 +62,8 @@ let joinAndDisplayLocalStream = async() => {
         },
     });
 
+    // videoTrack = await AgoraRTC.createCameraVideoTrack();
+
     audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
         encoderConfig: "speech_standard",
     });
@@ -91,6 +93,9 @@ let joinAndDisplayLocalStream = async() => {
     }
  
     if (member.role == "admin"){
+        document.getElementById('side-panel').style.width = '450px';
+        document.getElementById('main-panel').style.width = '65%';
+
         ADMIN = true
         
         let empty = 1 // let it be empty, empty = 1 (true)
@@ -116,10 +121,6 @@ let joinAndDisplayLocalStream = async() => {
         console.log('value of empty is: ' + empty)
 
     }
-    // } else {
-    //     document.getElementById('side-panel').style.width = '0%';
-    //     document.getElementById('main-panel').style.width = '100%';
-    // }
 
     // if instructor then this
 
@@ -154,7 +155,7 @@ let joinAndDisplayLocalStream = async() => {
 
         updateEmotion()
 
-    }, 5000)
+    }, 15000)
 
     // this gonna publish for other users to see
     await client.publish([audioTrack, videoTrack])  
@@ -357,13 +358,8 @@ let handleUserLeft = async (user) => {
 
 let handleUserUnpublished = async (user, mediaType) => {
     if(mediaType == "video"){
-        console.log('someone unpublished a video')
         let member = await getMember(user)
-
         if (member.screensharing === false){
-            console.log('screensharing is false, removing the container')
-            console.log('trying to remove screenshare container of uid')
-            console.log(user.uid)
             document.getElementById(`screenshare-container-${user.uid}`).remove()
         }
     }

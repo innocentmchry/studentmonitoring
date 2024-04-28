@@ -90,10 +90,8 @@ def toggleScreenShare(request):
     )
     if member.screensharing == True:
         member.screensharing = False
-        print('screen sharing stopped')
     else:
         member.screensharing = True
-        print('screen sharing initiated')
     
     member.save()
     return JsonResponse({})
