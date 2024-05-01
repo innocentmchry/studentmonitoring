@@ -213,6 +213,7 @@ input[name="room"]::placeholder {
     height: 100%;
     width: 100%;
     border: 3px solid white;
+    border-radius: 1%;
 }
 
 .video-player > * {

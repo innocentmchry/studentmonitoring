@@ -102,27 +102,37 @@ def getMember(request):
     room_name = request.GET.get('room_name')
     
     # quering the member
-    member = RoomMember.objects.get(
-        uid=uid,
-        room_name=room_name,  
-    )
+    try:
+        member = RoomMember.objects.get(
+            uid=uid,
+            room_name=room_name,  
+        )
+        
+        # returning back the name    
+        name = member.name
+        role = member.role
+        screensharing = member.screensharing
+        return JsonResponse({'name':name, 'role':role, 'screensharing':screensharing}, safe=False)
+    except RoomMember.DoesNotExist:
+        return JsonResponse({})
+
     
-    # returning back the name    
-    name = member.name
-    role = member.role
-    screensharing = member.screensharing
-    return JsonResponse({'name':name, 'role':role, 'screensharing':screensharing}, safe=False)
 
 @csrf_exempt
 def deleteMember(request):
     data = json.loads(request.body)
     
-    member = RoomMember.objects.get(
-        name=data['name'],
-        uid=data['UID'],
-        room_name=data['room_name'],
-    )
-    member.delete()
+    try: 
+        member = RoomMember.objects.get(
+            name=data['name'],
+            uid=data['UID'],
+            room_name=data['room_name'],
+        )
+        member.delete()
+    except RoomMember.DoesNotExist:
+        print("Deletion Failed, Object not found")
+    
+
     return JsonResponse('Member was deleted', safe=False)
 
 
@@ -134,7 +144,7 @@ def predictor(request):
     try:
         room_member = RoomMember.objects.get(uid=uid)
     except RoomMember.DoesNotExist:
-        print("Object not found")
+        print("Prediction Failed, Object not found")
         return JsonResponse({})
     
     name = room_member.name

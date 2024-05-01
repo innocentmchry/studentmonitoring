@@ -3,7 +3,7 @@ fetch('/calculate_first_component/')
   .then(response => response.json())
   .then(data => {
     if (data.val == 0) {
-      alert('Wait for the admin to end the conference, then reload again')
+      alert('Wait for the admin to end a conference, then reload again')
     }
     const ctx = document.getElementById('myChart');
     
@@ -368,7 +368,8 @@ let clearData = async () => {
     })
     let result = await response.json()
     if (result.deleted == 1) {
-      alert('Clear Data Successfull! Reload the page to update.')
+      alert('Clear Data Successfull!')
+      location.reload();
     }else {
       alert('Permission Denied, Only Admins can delete')
     }

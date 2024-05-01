@@ -68,11 +68,10 @@ let joinAndDisplayLocalStream = async() => {
         encoderConfig: "speech_standard",
     });
 
-    let member = await createMember()
+    let member;
 
     try {
-        let result = await createMember();
-        console.log("Member created:");
+        member = await createMember();
     } catch (error) {
         console.error("Error creating member:", error);
         alert('Some Error occured, Please Join Again')
@@ -129,7 +128,6 @@ let joinAndDisplayLocalStream = async() => {
                 alert("check Empty Error");
             }
         })
-        console.log('value of empty is: ' + empty)
 
     }
 
@@ -168,7 +166,7 @@ let joinAndDisplayLocalStream = async() => {
             updateEmotion()
         }
 
-    }, 5000)
+    }, 15000)
 
     // this gonna publish for other users to see
     await client.publish([audioTrack, videoTrack])  
@@ -356,8 +354,6 @@ let handleUserLeft = async (user) => {
         element1.remove();
     }
 
-    // document.getElementById(`user-container-${user.uid}`).remove()
-
     const element2 = document.getElementById(`screenshare-container-${user.uid}`);
     if (element2 !== null) {
         element2.remove();
@@ -395,14 +391,18 @@ let handleVolumes = () => {
     client.enableAudioVolumeIndicator();
     client.on("volume-indicator", volumes => {
     volumes.forEach((volume, index) => {
-        console.log(`${index} UID ${volume.uid} Level ${volume.level}`);
 
-        let item = document.getElementById(`user-${volume.uid}`)
-
-        if(volume.level >= 50){
-            item.style.border = '3px solid #7CFC00';
-        }else{
-            item.style.border = '3px solid white';
+        try{
+            let item = document.getElementById(`user-${volume.uid}`)
+            if(item !== null){
+                if(volume.level >= 50){
+                    item.style.border = '3px solid #7CFC00';
+                }else{
+                    item.style.border = '3px solid white';
+                }
+            }
+        } catch(error){
+            console.log('Some error occurred')
         }
     });
     })
@@ -470,11 +470,6 @@ let createMember = async () => {
         body:JSON.stringify({'name':NAME, 'room_name':CHANNEL, 'UID': UID, 'email': EMAIL})
     })
     let member = await response.json()
-    console.log("Member created")
-    console.log("Member id is")
-    console.log(UID)
-    console.log("Member Name is")
-    console.log(member.name)
     return member
 }
 
@@ -612,22 +607,8 @@ let screenShare = async (e) => {
     }
 }
     
-// if member closes instead of leave button
-// window.addEventListener('beforeunload', deleteMember)
 
-let handleBeforeUnload = async () => {
-    let response = await fetch('/delete_member/', {
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({'name':NAME, 'room_name':CHANNEL, 'UID': UID})
-    })
-    let member = await response.json()
-
-}
-
-window.addEventListener('beforeunload', handleBeforeUnload)
+window.addEventListener('beforeunload', deleteMember)
 document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLocalStream)
 document.getElementById('camera-btn').addEventListener('click', toggleCamera)
 document.getElementById('screenshare-btn').addEventListener('click', screenShare)
