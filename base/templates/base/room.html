@@ -41,7 +41,15 @@
     <!-- side panel-->
     <div id="side-panel">
         <div class="side-panel-header">
-            <div class="side-panel-title">Student Monitoring</div>
+            <div class="side-panel-items" id="side-panel-title">Student Monitoring</div>
+            {% comment %} <div class="side-panel-items" title="Clear Data">
+                <img class="control-icon" id="side-panel-clear-btn" src="{% static 'images/delete-button.svg' %}" />
+            </div> {% endcomment %}
+
+            <div class="side-panel-items" >
+                <button title="Clear Emotion Data" id="side-panel-clear-btn">Clear Data</button>
+            </div>
+            
         </div>
         <div class="table-body">
                 <table id="dynamic-table">

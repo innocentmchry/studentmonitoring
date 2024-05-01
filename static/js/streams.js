@@ -70,12 +70,23 @@ let joinAndDisplayLocalStream = async() => {
 
     let member = await createMember()
 
+    try {
+        let result = await createMember();
+        console.log("Member created:");
+    } catch (error) {
+        console.error("Error creating member:", error);
+        alert('Some Error occured, Please Join Again')
+        window.open('/','_self')
+    }
+
     let player = `<div class="video-container" id="user-container-${UID}">
     <div class="username-wrapper"><span class="user-name">${member.name}</span></div>
     <video class="video-player" id="user-${UID}" autoplay ></video>
     </div>`
     
     document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
+
+    handleVolumes()
 
     const videoContainers = document.querySelectorAll('.video-container')
     numberOfElements = videoContainers.length
@@ -153,9 +164,11 @@ let joinAndDisplayLocalStream = async() => {
             // document.getElementById('result-name').innerText = RESULT
         }
 
-        updateEmotion()
+        if (ADMIN){
+            updateEmotion()
+        }
 
-    }, 15000)
+    }, 5000)
 
     // this gonna publish for other users to see
     await client.publish([audioTrack, videoTrack])  
@@ -337,7 +350,19 @@ let handleUserJoined = async (user, mediaType) => {
 
 let handleUserLeft = async (user) => {
     delete remoteUsers[user.uid]
-    document.getElementById(`user-container-${user.uid}`).remove()
+
+    const element1 = document.getElementById(`user-container-${user.uid}`);
+    if (element1 !== null) {
+        element1.remove();
+    }
+
+    // document.getElementById(`user-container-${user.uid}`).remove()
+
+    const element2 = document.getElementById(`screenshare-container-${user.uid}`);
+    if (element2 !== null) {
+        element2.remove();
+    }
+
 
     const videoContainers = document.querySelectorAll('.video-container')
     numberOfElements = videoContainers.length
@@ -365,6 +390,23 @@ let handleUserUnpublished = async (user, mediaType) => {
     }
 }
 
+let handleVolumes = () => {
+    AgoraRTC.setParameter('AUDIO_VOLUME_INDICATION_INTERVAL', '1000')
+    client.enableAudioVolumeIndicator();
+    client.on("volume-indicator", volumes => {
+    volumes.forEach((volume, index) => {
+        console.log(`${index} UID ${volume.uid} Level ${volume.level}`);
+
+        let item = document.getElementById(`user-${volume.uid}`)
+
+        if(volume.level >= 50){
+            item.style.border = '3px solid #7CFC00';
+        }else{
+            item.style.border = '3px solid white';
+        }
+    });
+    })
+}
 
 let leaveAndRemoveLocalStream = async () => {
     audioTrack.stop()
@@ -380,7 +422,7 @@ let leaveAndRemoveLocalStream = async () => {
         await calculateSummary()
     }
     else{
-        window.open('/summary','_self')
+        window.open('/','_self')
     }
 
 }
@@ -428,6 +470,11 @@ let createMember = async () => {
         body:JSON.stringify({'name':NAME, 'room_name':CHANNEL, 'UID': UID, 'email': EMAIL})
     })
     let member = await response.json()
+    console.log("Member created")
+    console.log("Member id is")
+    console.log(UID)
+    console.log("Member Name is")
+    console.log(member.name)
     return member
 }
 
@@ -451,7 +498,7 @@ let deleteMember = async () => {
 
 let clearData = async () => {  
     let EMAIL = sessionStorage.getItem('email')
-    let response = await fetch('/check_admin_clear_data/', {
+    let response = await fetch('/check_admin_clear_data_room/', {
       method:'POST',
       headers:{
           'Content-Type':'application/json'
@@ -487,19 +534,19 @@ if (numberOfElements > 9) {
 }
 
 
-// if member closes instead of leave button
-// window.addEventListener('beforeunload', deleteMember)
 
 let screenShared = 0;
 let screenTrack = []
 let screenShare = async (e) => {
-    if(ADMIN){
-        if (screenShared == 0) {
-            
+    if (screenShared == 0) {
+
+        const screenShareElement = document.getElementById("screensharevideo");
+        
+        if(screenShareElement == null){
             try{
                 screenTrack = await AgoraRTC.createScreenVideoTrack({
-                    encoderConfig: "480p"
-                  });
+                    encoderConfig: "720p"
+                    });
             } catch (error) {
                 alert("Select a window or tab to share")
                 return
@@ -520,90 +567,75 @@ let screenShare = async (e) => {
             
             document.getElementById('screen-share-section').insertAdjacentHTML('beforeend', ssplayer)
             screenPlayerContainer = "screensharevideo"
-
+    
     
             client.publish([screenTrack]);
         
             screenTrack.play(screenPlayerContainer, {mirror : false});
             e.target.style.backgroundColor = 'rgb(255, 80, 80, 1)'
             screenShared = 1
-        }else {
-    
-            let response = await fetch(`/toggle_screenshare/?UID=${UID}&room_name=${CHANNEL}`)
-            
-            client.unpublish([screenTrack]);
-            screenTrack.close();
-            document.getElementById(`screenshare-container-${UID}`).remove()
-    
-            let vplayer = `<div class="video-container" id="user-container-${UID}">
-            <div class="username-wrapper"><span class="user-name">${NAME}</span></div>
-            <video class="video-player" id="user-${UID}" autoplay ></video>
-            </div>`
-    
-            document.getElementById('video-streams').insertAdjacentHTML('beforeend', vplayer)
-    
-            videoTrack = await AgoraRTC.createCameraVideoTrack({
-                optimizationMode: "detail",
-                encoderConfig: {
-                    width: 320,
-                    height: 180,
-                    frameRate: 15,
-                    bitrateMin: 140,
-                    bitrateMax: 140,
-                },
-            });
-            client.publish([videoTrack]);
-    
-            videoTrack.play(`user-${UID}`, {mirror : false});
-            e.target.style.backgroundColor = '#fff'
-            screenShared = 0
         }
-    }
-    else{
-        alert('Permission Denied')
-    }
-    
-    
+        else{
+            alert('Someone else is sharing the screen')
+        }
 
+    }else {
 
-
-    // screenPlayerContainer = `user-${UID}`
-    // if (screenShared == 0) {
+        let response = await fetch(`/toggle_screenshare/?UID=${UID}&room_name=${CHANNEL}`)
         
+        client.unpublish([screenTrack]);
+        screenTrack.close();
+        document.getElementById(`screenshare-container-${UID}`).remove()
 
-    //     screenTrack = await AgoraRTC.createScreenVideoTrack();
-    
-    //     client.unpublish([videoTrack]);
-    //     videoTrack.close();
-    
-    //     client.publish([screenTrack]);
-    
-    //     screenTrack.play(screenPlayerContainer, {mirror : false});
-    //     e.target.style.backgroundColor = 'rgb(255, 80, 80, 1)'
-    //     screenShared = 1
-    // }else {
-    //     client.unpublish([screenTrack]);
-    //     screenTrack.close();
+        let vplayer = `<div class="video-container" id="user-container-${UID}">
+        <div class="username-wrapper"><span class="user-name">${NAME}</span></div>
+        <video class="video-player" id="user-${UID}" autoplay ></video>
+        </div>`
 
-    //     videoTrack = await AgoraRTC.createCameraVideoTrack({
-    //         optimizationMode: "detail",
-    //         encoderConfig: {
-    //             width: 320,
-    //             height: 180,
-    //             frameRate: 15,
-    //             bitrateMin: 140,
-    //             bitrateMax: 140,
-    //         },
-    //     });
-    //     client.publish([videoTrack]);
+        document.getElementById('video-streams').insertAdjacentHTML('beforeend', vplayer)
 
-    //     videoTrack.play(screenPlayerContainer, {mirror : false});
-    //     e.target.style.backgroundColor = '#fff'
-    //     screenShared = 0
-    // }
+        videoTrack = await AgoraRTC.createCameraVideoTrack({
+            optimizationMode: "detail",
+            encoderConfig: {
+                width: 320,
+                height: 180,
+                frameRate: 15,
+                bitrateMin: 140,
+                bitrateMax: 140,
+            },
+        });
+        client.publish([videoTrack]);
+
+        videoTrack.play(`user-${UID}`, {mirror : false});
+        e.target.style.backgroundColor = '#fff'
+        screenShared = 0
+    }
+}
+    
+// if member closes instead of leave button
+// window.addEventListener('beforeunload', deleteMember)
+
+let handleBeforeUnload = async () => {
+    let response = await fetch('/delete_member/', {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({'name':NAME, 'room_name':CHANNEL, 'UID': UID})
+    })
+    let member = await response.json()
+
 }
 
+window.addEventListener('beforeunload', handleBeforeUnload)
 document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLocalStream)
 document.getElementById('camera-btn').addEventListener('click', toggleCamera)
 document.getElementById('screenshare-btn').addEventListener('click', screenShare)
 document.getElementById('mic-btn').addEventListener('click', toggleMic)
+document.getElementById('side-panel-clear-btn').addEventListener('click', function() {
+    var userConfirmed = window.confirm("Would you like to clear current meeting data?");
+    if(userConfirmed){
+        clearData();
+        updateEmotion();
+    }
+});

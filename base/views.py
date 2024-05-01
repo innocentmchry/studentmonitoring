@@ -39,7 +39,7 @@ def getToken(request):
     appId = '67cfc50c50834b7293ed8598993d29bd'
     appCertificate = '23f91830ba4e450784e9164c118e9bb0'
     channelName = request.GET.get('channel')
-    uid = random.randint(1, 230)
+    uid = random.randint(100, 999)
     expirationTimeInSeconds = 3600 * 24
     currentTimeStamp = int(time.time())
     privilegeExpiredTs = currentTimeStamp + expirationTimeInSeconds
@@ -62,8 +62,6 @@ def room(request):
 def createMember(request):
     data = json.loads(request.body)
     
-    # check if data['email'] is contained in a database named Admin which has column named email, if so assign the role as admin, other wise asign as participant
-
     email = data['email']
     
     try:
@@ -106,8 +104,7 @@ def getMember(request):
     # quering the member
     member = RoomMember.objects.get(
         uid=uid,
-        room_name=room_name,
-        
+        room_name=room_name,  
     )
     
     # returning back the name    
@@ -131,8 +128,17 @@ def deleteMember(request):
 
 @csrf_exempt
 def predictor(request):
-    # name = request.POST['name']
+
     uid = request.POST['uid']
+    
+    try:
+        room_member = RoomMember.objects.get(uid=uid)
+    except RoomMember.DoesNotExist:
+        print("Object not found")
+        return JsonResponse({})
+    
+    name = room_member.name
+
     
     blob = request.FILES['image'].read()
     thumb = Image.open(BytesIO(blob))
@@ -227,8 +233,6 @@ def predictor(request):
 
     # write a query to get name 
    
-    room_member = get_object_or_404(RoomMember, uid=uid)
-    name = room_member.name
     student_emotion.name = name
     
     if emotion == 'curious':
@@ -457,6 +461,26 @@ def checkAdminClearData(request):
         deleted = 1
     
     return JsonResponse({'deleted':deleted})
+
+@csrf_exempt
+def checkAdminClearDataRoom(request):
+    data = json.loads(request.body)
+    
+    email = data['email']
+    deleted = 0
+    try:
+        admin = Admin.objects.get(email=email)
+        role = "admin"
+    except Admin.DoesNotExist:
+        role = "participant"
+    
+    if role == 'admin':
+        Summary.objects.all().delete()
+        Status.objects.all().delete()
+        Student_Emotion.objects.all().delete()
+        deleted = 1
+    
+    return JsonResponse({'deleted': deleted})
 
 @csrf_exempt
 def recalculate(request):
