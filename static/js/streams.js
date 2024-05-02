@@ -48,20 +48,11 @@ let joinAndDisplayLocalStream = async() => {
     //     console.log(error);
     //     });
 
-
-    if (isMobileDevice()) {
-        videoTrack = await AgoraRTC.createCameraVideoTrack({
-            optimizationMode: "detail",
-            encoderConfig: {
-                width: 180,
-                height: 320,
-                frameRate: 15,
-                bitrateMin: 140,
-                bitrateMax: 140,
-            },
-        });
-    } else {
-        videoTrack = await AgoraRTC.createCameraVideoTrack({
+    switch (screen.orientation.type) {
+        case "landscape-primary":
+        case "landscape-secondary":
+          console.log("Landscape Mode");
+          videoTrack = await AgoraRTC.createCameraVideoTrack({
             optimizationMode: "detail",
             encoderConfig: {
                 width: 320,
@@ -70,8 +61,48 @@ let joinAndDisplayLocalStream = async() => {
                 bitrateMin: 140,
                 bitrateMax: 140,
             },
-        });
+          });
+          break;
+        case "portrait-secondary":
+        case "portrait-primary":
+          console.log("Portrait Mode");
+          videoTrack = await AgoraRTC.createCameraVideoTrack({
+            optimizationMode: "detail",
+            encoderConfig: {
+                width: 180,
+                height: 320,
+                frameRate: 15,
+                bitrateMin: 140,
+                bitrateMax: 140,
+            },
+          });
+          break;
+        default:
+          console.log("The orientation API isn't supported in this browser :(");
+          videoTrack = await AgoraRTC.createCameraVideoTrack({
+            optimizationMode: "detail",
+            encoderConfig: {
+                width: 320,
+                height: 180,
+                frameRate: 15,
+                bitrateMin: 140,
+                bitrateMax: 140,
+            },
+          });
     }
+      
+
+
+    videoTrack = await AgoraRTC.createCameraVideoTrack({
+        optimizationMode: "detail",
+        encoderConfig: {
+            width: 320,
+            height: 180,
+            frameRate: 15,
+            bitrateMin: 140,
+            bitrateMax: 140,
+        },
+    });
 
 
     // videoTrack = await AgoraRTC.createCameraVideoTrack();
@@ -182,10 +213,6 @@ let joinAndDisplayLocalStream = async() => {
 
     // this gonna publish for other users to see
     await client.publish([audioTrack, videoTrack])  
-}
-
-let isMobileDevice = () => {
-    return /Mobi|Android|iPhone/i.test(navigator.userAgent);
 }
 
 
