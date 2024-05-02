@@ -50,7 +50,6 @@ let joinAndDisplayLocalStream = async() => {
 
 
     if (isMobileDevice()) {
-        console.log("This is a mobile device (iPhone or Android).");
         videoTrack = await AgoraRTC.createCameraVideoTrack({
             optimizationMode: "detail",
             encoderConfig: {
@@ -62,7 +61,6 @@ let joinAndDisplayLocalStream = async() => {
             },
         });
     } else {
-        console.log("This is a mobile device (iPhone or Android).");
         videoTrack = await AgoraRTC.createCameraVideoTrack({
             optimizationMode: "detail",
             encoderConfig: {
