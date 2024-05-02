@@ -72,9 +72,6 @@ $.ajax({
         var hopefullList = $('.s3');
         var neutralList = $('.s4');
 
-        console.log(response.hopefull_person)
-        console.log(response.neutral_person)
-
         response.curious_person.forEach(item => myFunction(item, curiousList))
         response.confused_person.forEach(item => myFunction(item, confusedList))
         response.bored_person.forEach(item => myFunction(item, boredList))

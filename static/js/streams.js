@@ -49,18 +49,32 @@ let joinAndDisplayLocalStream = async() => {
     //     });
 
 
+    if (isMobileDevice()) {
+        console.log("This is a mobile device (iPhone or Android).");
+        videoTrack = await AgoraRTC.createCameraVideoTrack({
+            optimizationMode: "detail",
+            encoderConfig: {
+                width: 180,
+                height: 320,
+                frameRate: 15,
+                bitrateMin: 140,
+                bitrateMax: 140,
+            },
+        });
+    } else {
+        console.log("This is a mobile device (iPhone or Android).");
+        videoTrack = await AgoraRTC.createCameraVideoTrack({
+            optimizationMode: "detail",
+            encoderConfig: {
+                width: 320,
+                height: 180,
+                frameRate: 15,
+                bitrateMin: 140,
+                bitrateMax: 140,
+            },
+        });
+    }
 
-
-    videoTrack = await AgoraRTC.createCameraVideoTrack({
-        optimizationMode: "detail",
-        encoderConfig: {
-            width: 320,
-            height: 180,
-            frameRate: 15,
-            bitrateMin: 140,
-            bitrateMax: 140,
-        },
-    });
 
     // videoTrack = await AgoraRTC.createCameraVideoTrack();
 
@@ -171,6 +185,11 @@ let joinAndDisplayLocalStream = async() => {
     // this gonna publish for other users to see
     await client.publish([audioTrack, videoTrack])  
 }
+
+let isMobileDevice = () => {
+    return /Mobi|Android|iPhone/i.test(navigator.userAgent);
+}
+
 
 let updateEmotion = () => {
     $.ajax({
@@ -379,9 +398,9 @@ let handleUserLeft = async (user) => {
 
 let handleUserUnpublished = async (user, mediaType) => {
     if(mediaType == "video"){
-        let member = await getMember(user)
-        if (member.screensharing === false){
-            document.getElementById(`screenshare-container-${user.uid}`).remove()
+        const element = document.getElementById(`screenshare-container-${user.uid}`);
+        if (element !== null){
+            element.remove()
         }
     }
 }
