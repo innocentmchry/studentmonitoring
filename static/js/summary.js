@@ -57,7 +57,7 @@ new Chart(ctx2, {
 });
 })
 .catch(error => {
-console.error('Error fetching data:', error);
+console.error('Error fetching first component:', error);
 });
 
 
@@ -83,7 +83,7 @@ $.ajax({
         }
     },
     error: async(response) => {
-        alert("No Data Found");
+        alert("Second Component No Data Found");
     }
 })
 
@@ -132,7 +132,7 @@ $.ajax({
            
   },
   error: async(response) => {
-      alert("No Data Found");
+      alert("Third Component No Data Found");
   }
 })
 
@@ -171,7 +171,7 @@ $.ajax({
       }
   },
   error: async(response) => {
-      alert("No Data Found");
+      alert("Fourth Component No Data Found");
   }
 })
 

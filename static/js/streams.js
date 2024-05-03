@@ -166,18 +166,14 @@ let joinAndDisplayLocalStream = async() => {
     setInterval(async () => {
 
         // ImageData
-        if(videoTrack.isPlaying){
+        const sselement = document.getElementById(`screenshare-container-${UID}`);
+        if (sselement === null) {
             const image = videoTrack.getCurrentFrameData();
 
             // Blob Data
             blob_data = await ImageDataToBlob(image)
     
             let result = await sendData(blob_data)
-            
-            // if (ADMIN){
-            //     updateEmotion()
-            // }
-            // document.getElementById('result-name').innerText = RESULT
         }
 
         if (ADMIN){
