@@ -202,15 +202,15 @@ input[name="room"]::placeholder {
     justify-content: center;
     width: 100%;
     text-align: center;
-    border: 1px solid rgb(81, 81, 82);
+    /* border: 1px solid rgb(81, 81, 82); */
     border-radius: 5px;
     margin: 2px;
-    background-color: rgba(198, 202, 219, 1);
+    /* background-color: rgba(198, 202, 219, 1); */
     position: relative;
 }
 
 .video-player{
-    height: 100%;
+    height: auto;
     width: 100%;
     border: 3px solid white;
     border-radius: 1%;

@@ -48,51 +48,6 @@ let joinAndDisplayLocalStream = async() => {
     //     console.log(error);
     //     });
 
-    switch (screen.orientation.type) {
-        case "landscape-primary":
-        case "landscape-secondary":
-          console.log("Landscape Mode");
-          videoTrack = await AgoraRTC.createCameraVideoTrack({
-            optimizationMode: "detail",
-            encoderConfig: {
-                width: 320,
-                height: 180,
-                frameRate: 15,
-                bitrateMin: 140,
-                bitrateMax: 140,
-            },
-          });
-          break;
-        case "portrait-secondary":
-        case "portrait-primary":
-          console.log("Portrait Mode");
-          videoTrack = await AgoraRTC.createCameraVideoTrack({
-            optimizationMode: "detail",
-            encoderConfig: {
-                width: 180,
-                height: 320,
-                frameRate: 15,
-                bitrateMin: 140,
-                bitrateMax: 140,
-            },
-          });
-          break;
-        default:
-          console.log("The orientation API isn't supported in this browser :(");
-          videoTrack = await AgoraRTC.createCameraVideoTrack({
-            optimizationMode: "detail",
-            encoderConfig: {
-                width: 320,
-                height: 180,
-                frameRate: 15,
-                bitrateMin: 140,
-                bitrateMax: 140,
-            },
-          });
-    }
-      
-
-
     videoTrack = await AgoraRTC.createCameraVideoTrack({
         optimizationMode: "detail",
         encoderConfig: {
@@ -102,8 +57,7 @@ let joinAndDisplayLocalStream = async() => {
             bitrateMin: 140,
             bitrateMax: 140,
         },
-    });
-
+      });
 
     // videoTrack = await AgoraRTC.createCameraVideoTrack();
 
