@@ -14,6 +14,8 @@ let videoTrack = []
 let audioTrack = []
 let remoteUsers = {}
 let ADMIN = false
+let screenShared = 0;
+let screenTrack = []
 
 let joinAndDisplayLocalStream = async() => {
     // document.getElementById('room-name').innerText = CHANNEL
@@ -50,30 +52,16 @@ let joinAndDisplayLocalStream = async() => {
 
 
     
-    if (isMobileDevice()) {
-        videoTrack = await AgoraRTC.createCameraVideoTrack({
-            optimizationMode: "detail",
-            encoderConfig: {
-                width: 180,
-                height: 320,
-                frameRate: 15,
-                bitrateMin: 140,
-                bitrateMax: 140,
-            },
-          });
-
-    } else {
-        videoTrack = await AgoraRTC.createCameraVideoTrack({
-            optimizationMode: "detail",
-            encoderConfig: {
-                width: 320,
-                height: 180,
-                frameRate: 15,
-                bitrateMin: 140,
-                bitrateMax: 140,
-            },
-          });
-    }
+    videoTrack = await AgoraRTC.createCameraVideoTrack({
+        optimizationMode: "detail",
+        encoderConfig: {
+            width: 320,
+            height: 180,
+            frameRate: 15,
+            bitrateMin: 140,
+            bitrateMax: 140,
+        },
+      });
     
 
     // videoTrack = await AgoraRTC.createCameraVideoTrack({
@@ -183,11 +171,7 @@ let joinAndDisplayLocalStream = async() => {
     }, 15000)
 
     // this gonna publish for other users to see
-    await client.publish([audioTrack, videoTrack])  
-}
-
-function isMobileDevice() {
-    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    await client.publish([audioTrack, videoTrack])
 }
 
 
@@ -548,9 +532,6 @@ if (numberOfElements > 9) {
 }
 
 
-
-let screenShared = 0;
-let screenTrack = []
 let screenShare = async (e) => {
     if (screenShared == 0) {
 
@@ -588,6 +569,12 @@ let screenShare = async (e) => {
             screenTrack.play(screenPlayerContainer, {mirror : false});
             e.target.style.backgroundColor = 'rgb(255, 80, 80, 1)'
             screenShared = 1
+
+            screenTrack.on("track-ended", () => {
+                if (screenShared == 1){
+                    screenShare()
+                }
+            });
         }
         else{
             alert('Someone else is sharing the screen')
@@ -621,7 +608,8 @@ let screenShare = async (e) => {
         client.publish([videoTrack]);
 
         videoTrack.play(`user-${UID}`, {mirror : false});
-        e.target.style.backgroundColor = '#fff'
+        let button = document.getElementById('screenshare-btn');
+        button.style.backgroundColor = '#fff';
         screenShared = 0
     }
 }

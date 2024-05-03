@@ -387,7 +387,8 @@ let recalculate = async () => {
   })
   let result = await response.json()
   if (result.recalculated == 1) {
-    alert('Recalculation Successfull! Reload the page to update.')
+    alert('Recalculation Successfull!')
+    location.reload();
   }else {
     alert('Permission Denied, Only Admins can recalculate')
   }
