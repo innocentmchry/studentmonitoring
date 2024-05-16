@@ -473,6 +473,25 @@ def checkAdminClearData(request):
     return JsonResponse({'deleted':deleted})
 
 @csrf_exempt
+def checkAdmin(request):
+    data = json.loads(request.body)    
+    email = data['email']
+    try:
+        admin = Admin.objects.get(email=email)
+        role = "admin"
+    except Admin.DoesNotExist:
+        role = "participant"
+    
+    result = 0
+    if role == 'admin':
+        Summary.objects.all().delete()
+        Status.objects.all().delete()
+        Student_Emotion.objects.all().delete()
+        result = 1
+    
+    return JsonResponse({'result': result})
+
+@csrf_exempt
 def checkAdminClearDataRoom(request):
     data = json.loads(request.body)
     
@@ -516,4 +535,10 @@ def checkEmpty(request):
         empty = 0
 
     return JsonResponse({'empty': empty})
+
+def checkNumberOfPeople(request):
+    count = RoomMember.objects.count()
+    print(count)
+    response_data = {'count': count}
+    return JsonResponse(response_data)
     

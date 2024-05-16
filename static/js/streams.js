@@ -25,6 +25,14 @@ let joinAndDisplayLocalStream = async() => {
     client.on('user-unpublished', handleUserUnpublished)
 
     try {
+        const count = await countParticipants()
+        const isAdmin = await checkAdmin()
+        console.log('admin is', isAdmin)
+
+        if(!isAdmin && count >= 15){
+            alert("Maximum Number of Participants Reached! Please Join Later!")
+            window.open('/', '_self')
+        }
         await client.join(APP_ID, CHANNEL, TOKEN, UID)
     } catch(e) {
         console.error(e)
@@ -494,6 +502,25 @@ let deleteMember = async () => {
 
 }
 
+let checkAdmin = async () => {  
+    let EMAIL = sessionStorage.getItem('email')
+    let response = await fetch('/check_admin/', {
+      method:'POST',
+      headers:{
+          'Content-Type':'application/json'
+      },
+      body:JSON.stringify({'email': EMAIL})
+    })
+    let result = await response.json()
+    console.log('result in fetch function is', result.result)
+    if (result.result == 1){
+        return true
+    }else {
+        return false
+    }
+    
+  }
+
 let clearData = async () => {  
     let EMAIL = sessionStorage.getItem('email')
     let response = await fetch('/check_admin_clear_data_room/', {
@@ -511,6 +538,16 @@ let clearData = async () => {
     }
     
   }
+
+let countParticipants = async () => {
+    try {
+      const response = await fetch('/count_members/');
+      const data = await response.json();
+      return data.count;
+    } catch (error) {
+      alert('Error in count participants')
+    }
+};
 
 
 

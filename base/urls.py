@@ -3,10 +3,8 @@ from . import views
 
 urlpatterns = [
     path('', views.lobby),
-    path('room/', views.room),
-    
-    path('get_token/', views.getToken),
-    
+    path('room/', views.room),    
+    path('get_token/', views.getToken),   
     path('create_member/', views.createMember),
     path('get_member/', views.getMember),
     path('delete_member/', views.deleteMember),
@@ -24,5 +22,7 @@ urlpatterns = [
     path('check_admin_clear_data_room/', views.checkAdminClearDataRoom),
     path('check_admin_recalculate_data/', views.recalculate),
     path('check_empty/', views.checkEmpty),
-    path('toggle_screenshare/', views.toggleScreenShare)
+    path('toggle_screenshare/', views.toggleScreenShare),
+    path('count_members/', views.checkNumberOfPeople),
+    path('check_admin/', views.checkAdmin)
 ]
