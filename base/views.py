@@ -538,7 +538,6 @@ def checkEmpty(request):
 
 def checkNumberOfPeople(request):
     count = RoomMember.objects.count()
-    print(count)
     response_data = {'count': count}
     return JsonResponse(response_data)
     
