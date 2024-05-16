@@ -316,7 +316,7 @@ input[name="room"]::placeholder {
     background-color: rgb(255, 80, 80, 1);
 } */
 
-#side-panel-clear-btn{
+.side-panel-btn{
     
     display: inline-block;
     outline: 0;

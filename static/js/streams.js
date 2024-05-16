@@ -39,9 +39,12 @@ let joinAndDisplayLocalStream = async() => {
     });
 
     try {
-        const count = await countParticipants()
+        // const count = await countParticipants()
+
+        const videoContainers = document.querySelectorAll('.video-container')
+        const count = videoContainers.length
+
         const isAdmin = await checkAdmin()
-        console.log('admin is', isAdmin)
 
         if(!isAdmin && count >= 15){
             alert("Maximum Number of Participants Reached! Please Join Later!")
@@ -123,8 +126,6 @@ let joinAndDisplayLocalStream = async() => {
 
     handleVolumes()
 
-    const videoContainers = document.querySelectorAll('.video-container')
-    numberOfElements = videoContainers.length
     var videoStream = document.getElementById('video-streams')
     
     if (numberOfElements > 9) {
@@ -144,26 +145,26 @@ let joinAndDisplayLocalStream = async() => {
 
         ADMIN = true
         
-        let empty = 1 // let it be empty, empty = 1 (true)
+        // let empty = 1 // let it be empty, empty = 1 (true)
 
-        $.ajax({
-            type:'GET',
-            url: '/check_empty/',
-            success: (response) => {
-                empty = response.empty
-                if (empty == 0) {
-                    var userConfirmed = window.confirm("Would you like to clear the previous meeting data?");
-                    if (userConfirmed) {
-                        clearData()
-                    } else {
-                        alert("Clear Data canceled, The previous meeting data will mix up with new meeting data");
-                    }
-                } 
-            },
-            error: async(response) => {
-                alert("check Empty Error");
-            }
-        })
+        // $.ajax({
+        //     type:'GET',
+        //     url: '/check_empty/',
+        //     success: (response) => {
+        //         empty = response.empty
+        //         if (empty == 0) {
+        //             var userConfirmed = window.confirm("Would you like to clear the previous meeting data?");
+        //             if (userConfirmed) {
+        //                 clearData()
+        //             } else {
+        //                 alert("Clear Data canceled, The previous meeting data will mix up with new meeting data");
+        //             }
+        //         } 
+        //     },
+        //     error: async(response) => {
+        //         alert("check Empty Error");
+        //     }
+        // })
 
     }
 
@@ -672,7 +673,7 @@ let screenShare = async (e) => {
         screenShared = 0
     }
 }
-    
+
 
 window.addEventListener('beforeunload', deleteMember)
 document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLocalStream)
@@ -685,4 +686,8 @@ document.getElementById('side-panel-clear-btn').addEventListener('click', functi
         clearData();
         updateEmotion();
     }
+});
+
+document.getElementById('side-panel-download-btn').addEventListener('click', function() {
+    window.location.href = '/download_csv_file2/'
 });
