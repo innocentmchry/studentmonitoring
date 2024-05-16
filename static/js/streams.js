@@ -58,18 +58,30 @@ let joinAndDisplayLocalStream = async() => {
     //     console.log(error);
     //     });
 
-
+    try{
+        videoTrack = await AgoraRTC.createCameraVideoTrack({
+            optimizationMode: "detail",
+            encoderConfig: {
+                width: 320,
+                height: 180,
+                frameRate: 15,
+                bitrateMin: 140,
+                bitrateMax: 140,
+            },
+          });
+    } catch (error) {
+        alert("Camera Permission Denied")
+        window.open('/', '_self')
+    }
     
-    videoTrack = await AgoraRTC.createCameraVideoTrack({
-        optimizationMode: "detail",
-        encoderConfig: {
-            width: 320,
-            height: 180,
-            frameRate: 15,
-            bitrateMin: 140,
-            bitrateMax: 140,
-        },
-      });
+    try{
+        audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
+            encoderConfig: "speech_standard",
+        });
+    } catch (error) {
+        alert("Microphone Permission Denied")
+        window.open('/', '_self')
+    }
     
 
     // videoTrack = await AgoraRTC.createCameraVideoTrack({
@@ -77,10 +89,6 @@ let joinAndDisplayLocalStream = async() => {
     // });
 
     // videoTrack = await AgoraRTC.createCameraVideoTrack();
-
-    audioTrack = await AgoraRTC.createMicrophoneAudioTrack({
-        encoderConfig: "speech_standard",
-    });
 
     let member;
 
