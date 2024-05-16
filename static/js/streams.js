@@ -24,6 +24,20 @@ let joinAndDisplayLocalStream = async() => {
     client.on('user-left', handleUserLeft)
     client.on('user-unpublished', handleUserUnpublished)
 
+    navigator.mediaDevices.enumerateDevices()
+    .then(devices => {
+        const hasCamera = devices.some(device => device.kind === 'videoinput');
+        
+        if (!hasCamera) {
+            console.log('No camera devices found.');
+            alert("No Camera Device Found")
+            window.open('/', '_self')   
+        }
+    })
+    .catch(error => {
+        console.error('Error enumerating devices:', error);
+    });
+
     try {
         const count = await countParticipants()
         const isAdmin = await checkAdmin()
