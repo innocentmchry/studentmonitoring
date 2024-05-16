@@ -16,6 +16,7 @@ let remoteUsers = {}
 let ADMIN = false
 let screenShared = 0;
 let screenTrack = []
+let numberOfElements = 0
 
 let joinAndDisplayLocalStream = async() => {
     // document.getElementById('room-name').innerText = CHANNEL
@@ -42,11 +43,11 @@ let joinAndDisplayLocalStream = async() => {
         // const count = await countParticipants()
 
         const videoContainers = document.querySelectorAll('.video-container')
-        const count = videoContainers.length
+        numberOfElements = videoContainers.length
 
         const isAdmin = await checkAdmin()
 
-        if(!isAdmin && count >= 15){
+        if(!isAdmin && numberOfElements >= 15){
             alert("Maximum Number of Participants Reached! Please Join Later!")
             window.open('/', '_self')
         }
@@ -126,6 +127,8 @@ let joinAndDisplayLocalStream = async() => {
 
     handleVolumes()
 
+    const videoContainers = document.querySelectorAll('.video-container')
+    numberOfElements = videoContainers.length
     var videoStream = document.getElementById('video-streams')
     
     if (numberOfElements > 9) {
