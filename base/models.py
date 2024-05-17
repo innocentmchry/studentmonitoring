@@ -65,5 +65,9 @@ class Summary(models.Model):
     
     def __str__(self):
         return self.name
+    
+class ChannelInfo(models.Model):
+    number = models.IntegerField(default=0)
+    
 
     

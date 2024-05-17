@@ -29,7 +29,7 @@ import csv
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
-from .models import RoomMember, Admin, FaceImage, Status, Student_Emotion, Summary
+from .models import RoomMember, Admin, FaceImage, Status, Student_Emotion, Summary, ChannelInfo
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -536,8 +536,22 @@ def checkEmpty(request):
 
     return JsonResponse({'empty': empty})
 
+@csrf_exempt
+def updateNumberOfPeople(request):
+    data = json.loads(request.body)   
+    numberOfPeople = data['number']
+    channel_info = ChannelInfo.objects.first()
+    if channel_info:
+        channel_info.number = numberOfPeople
+        channel_info.save()
+    else:
+        ChannelInfo.objects.create(number=numberOfPeople)
+    return JsonResponse({})
+
 def checkNumberOfPeople(request):
-    count = RoomMember.objects.count()
-    response_data = {'count': count}
-    return JsonResponse(response_data)
+    channel_info = ChannelInfo.objects.first()
+    if channel_info:
+        return JsonResponse({'count': channel_info.number})
+    else:
+        return JsonResponse({'count': 0})
     

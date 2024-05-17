@@ -40,14 +40,16 @@ let joinAndDisplayLocalStream = async() => {
     });
 
     try {
-        // const count = await countParticipants()
+        const count = await countParticipants()
 
-        const videoContainers = document.querySelectorAll('.video-container')
-        numberOfElements = videoContainers.length
+        // const videoContainers = document.querySelectorAll('.video-container')
+        // numberOfElements = videoContainers.length
+        // console.log('Number of participants ', numberOfElements)
 
         const isAdmin = await checkAdmin()
+        console.log('Number of participants ', count)
 
-        if(!isAdmin && numberOfElements >= 15){
+        if(!isAdmin && count >= 15){
             alert("Maximum Number of Participants Reached! Please Join Later!")
             window.open('/', '_self')
         }
@@ -206,6 +208,21 @@ let joinAndDisplayLocalStream = async() => {
 
     // this gonna publish for other users to see
     await client.publish([audioTrack, videoTrack])
+
+    if(ADMIN){
+        console.log('update members called')
+        const videoContainers = document.querySelectorAll('.video-container')
+        number = videoContainers.length
+
+        let response = await fetch('/update_members/', {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({'number': number})
+          })
+          let result = await response.json()
+    }
 }
 
 
@@ -360,7 +377,6 @@ let handleUserJoined = async (user, mediaType) => {
             const videoContainers = document.querySelectorAll('.video-container')
             numberOfElements = videoContainers.length
             var videoStream = document.getElementById('video-streams')
-            
             if (numberOfElements > 9) {
                 columns = 4
                 videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`            
@@ -379,11 +395,25 @@ let handleUserJoined = async (user, mediaType) => {
         user.audioTrack.play()
     }
 
+    if(ADMIN){
+        console.log('update members called')
+        const videoContainers = document.querySelectorAll('.video-container')
+        number = videoContainers.length
 
+        let response = await fetch('/update_members/', {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({'number': number})
+          })
+          let result = await response.json()
+    }
 
 }
 
 let handleUserLeft = async (user) => {
+
     delete remoteUsers[user.uid]
 
     const element1 = document.getElementById(`user-container-${user.uid}`);
@@ -411,6 +441,21 @@ let handleUserLeft = async (user) => {
     } else if (numberOfElements < 10){
         columns = 3
         videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
+    }
+
+    if(ADMIN){
+        console.log('update members called')
+        const videoContainers = document.querySelectorAll('.video-container')
+        number = videoContainers.length
+
+        let response = await fetch('/update_members/', {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({'number': number})
+          })
+          let result = await response.json()
     }
 }
 

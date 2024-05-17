@@ -304,6 +304,7 @@ input[name="room"]::placeholder {
     justify-content: center;
     align-items: center;
     padding: 20px 15px;
+    gap: 1.5px;
 }
 
 .side-panel-items{

@@ -23,6 +23,7 @@ urlpatterns = [
     path('check_admin_recalculate_data/', views.recalculate),
     path('check_empty/', views.checkEmpty),
     path('toggle_screenshare/', views.toggleScreenShare),
+    path('update_members/', views.updateNumberOfPeople),
     path('count_members/', views.checkNumberOfPeople),
     path('check_admin/', views.checkAdmin)
 ]
