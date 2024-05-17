@@ -484,9 +484,6 @@ def checkAdmin(request):
     
     result = 0
     if role == 'admin':
-        Summary.objects.all().delete()
-        Status.objects.all().delete()
-        Student_Emotion.objects.all().delete()
         result = 1
     
     return JsonResponse({'result': result})
