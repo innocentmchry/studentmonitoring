@@ -40,19 +40,19 @@ let joinAndDisplayLocalStream = async() => {
     });
 
     try {
-        const count = await countParticipants()
+        // const count = await countParticipants()
 
         // const videoContainers = document.querySelectorAll('.video-container')
         // numberOfElements = videoContainers.length
         // console.log('Number of participants ', numberOfElements)
 
-        const isAdmin = await checkAdmin()
-        console.log('Number of participants ', count)
+        // const isAdmin = await checkAdmin()
+        // console.log('Number of participants ', count)
 
-        if(!isAdmin && count >= 15){
-            alert("Maximum Number of Participants Reached! Please Join Later!")
-            window.open('/', '_self')
-        }
+        // if(!isAdmin && count >= 15){
+        //     alert("Maximum Number of Participants Reached! Please Join Later!")
+        //     window.open('/', '_self')
+        // }
         await client.join(APP_ID, CHANNEL, TOKEN, UID)
     } catch(e) {
         console.error(e)
@@ -395,20 +395,20 @@ let handleUserJoined = async (user, mediaType) => {
         user.audioTrack.play()
     }
 
-    if(ADMIN){
-        console.log('update members called')
-        const videoContainers = document.querySelectorAll('.video-container')
-        number = videoContainers.length
+    // if(ADMIN){
+    //     console.log('update members called')
+    //     const videoContainers = document.querySelectorAll('.video-container')
+    //     number = videoContainers.length
 
-        let response = await fetch('/update_members/', {
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({'number': number})
-          })
-          let result = await response.json()
-    }
+    //     let response = await fetch('/update_members/', {
+    //         method:'POST',
+    //         headers:{
+    //             'Content-Type':'application/json'
+    //         },
+    //         body:JSON.stringify({'number': number})
+    //       })
+    //       let result = await response.json()
+    // }
 
 }
 
@@ -443,20 +443,20 @@ let handleUserLeft = async (user) => {
         videoStream.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
     }
 
-    if(ADMIN){
-        console.log('update members called')
-        const videoContainers = document.querySelectorAll('.video-container')
-        number = videoContainers.length
+    // if(ADMIN){
+    //     console.log('update members called')
+    //     const videoContainers = document.querySelectorAll('.video-container')
+    //     number = videoContainers.length
 
-        let response = await fetch('/update_members/', {
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({'number': number})
-          })
-          let result = await response.json()
-    }
+    //     let response = await fetch('/update_members/', {
+    //         method:'POST',
+    //         headers:{
+    //             'Content-Type':'application/json'
+    //         },
+    //         body:JSON.stringify({'number': number})
+    //       })
+    //       let result = await response.json()
+    // }
 }
 
 let handleUserUnpublished = async (user, mediaType) => {
